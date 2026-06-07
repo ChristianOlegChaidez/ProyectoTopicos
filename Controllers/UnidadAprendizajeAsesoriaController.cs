@@ -93,43 +93,59 @@ public class UnidadAprendizajeAsesoriaController : Controller
     }
 
     [HttpGet]
+    public async Task<IActionResult> BuscarMateria(string nombre)
+    {
+        var todasMaterias = await _context.Materias.ToListAsync();
+
+        var materias = todasMaterias
+            .Where(m => NormalizarTexto(m.NombreUA).Contains(NormalizarTexto(nombre)))
+            .Take(10)
+            .Select(m => new { m.ClaveUA, m.NombreUA, m.Creditos, m.NoPE, m.NombrePE, m.PlanDeEstudios })
+            .ToList();
+
+        return Json(materias);
+    }
+
+    [HttpGet]
     public async Task<IActionResult> BuscarAlumno(string nombre)
     {
-        var alumnos = await _context.Alumno
-            .Where(a => a.Nombre.ToUpper().Contains(nombre.ToUpper()))
+        var todos = await _context.Alumno.ToListAsync();
+
+        var alumnos = todos
+            .Where(a => NormalizarTexto(a.Nombre).Contains(NormalizarTexto(nombre)))
             .Take(10)
             .Select(a => new { a.Matricula, a.Nombre })
-            .ToListAsync();
+            .ToList();
+
         return Json(alumnos);
     }
 
     [HttpGet]
     public async Task<IActionResult> BuscarMaestro(string nombre)
     {
-        var maestros = await _context.Maestros
-            .Where(m => m.Nombre.ToUpper().Contains(nombre.ToUpper()))
+        var todos = await _context.Maestros.ToListAsync();
+
+        var maestros = todos
+            .Where(m => NormalizarTexto(m.Nombre).Contains(NormalizarTexto(nombre)))
             .Take(10)
             .Select(m => new { m.Numero_Empleado, m.Nombre })
-            .ToListAsync();
+            .ToList();
+
         return Json(maestros);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> BuscarMateria(string nombre)
+    private string NormalizarTexto(string texto)
     {
-        var materias = await _context.Materias
-            .Where(m => m.NombreUA.ToUpper().Contains(nombre.ToUpper()))
-            .Take(10)
-            .Select(m => new {
-                m.ClaveUA,
-                m.NombreUA,
-                Creditos = (double?)m.Creditos,
-                m.NoPE,
-                m.NombrePE,
-                m.PlanDeEstudios
-            })
-            .ToListAsync();
-        return Json(materias);
+        if (string.IsNullOrEmpty(texto)) return "";
+        var normalized = texto.Normalize(System.Text.NormalizationForm.FormD);
+        var sb = new System.Text.StringBuilder();
+        foreach (var c in normalized)
+        {
+            if (System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c)
+                != System.Globalization.UnicodeCategory.NonSpacingMark)
+                sb.Append(c);
+        }
+        return sb.ToString().ToUpper();
     }
 
 }
