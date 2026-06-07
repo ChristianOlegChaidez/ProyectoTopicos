@@ -1,0 +1,89 @@
+@model IEnumerable<ProyectoTopicos.Models.Ayudantias_Investigacion>
+
+@{
+    ViewData["Title"] = "Ayudantías";
+}
+
+<style>
+    .uabc-header {
+        background-color: #1a5c2a;
+        color: white;
+        padding: 20px 30px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        border-radius: 8px;
+    }
+
+        .uabc-header h1 {
+            font-size: 2rem;
+            margin: 0;
+            font-weight: bold;
+        }
+
+    .btn-uabc {
+        background-color: #1a5c2a;
+        color: white;
+        border: none;
+        padding: 12px 0;
+        font-size: 1.1rem;
+        border-radius: 6px;
+        width: 100%;
+    }
+
+        .btn-uabc:hover {
+            background-color: #145023;
+            color: white;
+        }
+
+    .tabla-container {
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        min-height: 400px;
+        padding: 10px;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="uabc-header">
+    <h1>Ayudantias de Investigacion</h1>
+</div>
+
+<div class="row mb-3">
+    <div class="col-4">
+        <a asp-action="Create" class="btn btn-uabc">Agregar</a>
+    </div>
+    <div class="col-4">
+        <a asp-action="DeleteSearch" class="btn btn-uabc">Eliminar</a>
+    </div>
+    <div class="col-4">
+        <a asp-action="EditSearch" class="btn btn-uabc">Modificar</a>
+    </div>
+</div>
+
+<div class="tabla-container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Clave</th>
+                <th>Programa Educativo</th>
+                <th>Alumno</th>
+                <th>Ayudantía</th>
+                <th>Empleado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Clave_Ayudantias</td>
+                    <td>@item.Programa_Educativo</td>
+                    <td>@item.Nombre_Alumno</td>
+                    <td>@item.Nombre_de_Ayudantia</td>
+                    <td>@item.Nombre_Empleado</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

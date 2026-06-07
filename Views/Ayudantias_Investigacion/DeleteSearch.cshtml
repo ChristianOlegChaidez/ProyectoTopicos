@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ProyectoTopicos.Models.Ayudantias_Investigacion>
+
+@{
+    ViewData["Title"] = "Eliminar Ayudantía";
+}
+
+<style>
+    .uabc-header {
+        background-color: #1a5c2a;
+        color: white;
+        padding: 20px 30px;
+        margin-bottom: 30px;
+        border-radius: 8px;
+    }
+
+        .uabc-header h1 {
+            font-size: 2rem;
+            margin: 0;
+            font-weight: bold;
+        }
+
+    .tabla-container {
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        min-height: 400px;
+        padding: 10px;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="uabc-header">
+    <h1>Eliminar Ayudantía de Investigación</h1>
+</div>
+
+<div class="mb-3">
+    <input id="buscador" class="form-control" placeholder="Busca por clave, matrícula o nombre de alumno..." />
+</div>
+
+<div class="tabla-container">
+    <table class="table table-striped" id="tablaEliminar">
+        <thead>
+            <tr>
+                <th>Clave</th>
+                <th>Matrícula</th>
+                <th>Alumno</th>
+                <th>Ayudantía</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Clave_Ayudantias</td>
+                    <td>@item.Matricula</td>
+                    <td>@item.Nombre_Alumno</td>
+                    <td>@item.Nombre_de_Ayudantia</td>
+                    <td>
+                        <a asp-action="Delete" asp-route-clave_ayudantias="@item.Clave_Ayudantias" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Regresar</a>
+
+@section Scripts {
+    <script>
+        document.getElementById('buscador').addEventListener('input', function () {
+            const q = this.value.toLowerCase();
+            document.querySelectorAll('#tablaEliminar tbody tr').forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(q) ? '' : 'none';
+            });
+        });
+    </script>
+}

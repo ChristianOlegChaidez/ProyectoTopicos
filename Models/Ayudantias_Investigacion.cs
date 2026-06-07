@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProyectoTopicos.Models
 {
     [Table("Ayudantias")]
     public class Ayudantias_Investigacion
     {
+        [Key]
         public int Clave_Ayudantias { get; set; }
         public string? Programa_Educativo { get; set; }
         public int No_Programa_Educativo { get; set; }

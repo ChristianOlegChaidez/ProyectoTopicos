@@ -146,4 +146,14 @@ public class AlumnoController : Controller
     {
         return _context.Alumno.Any(e => e.Matricula == matricula);
     }
+
+    public async Task<IActionResult> DeleteSearch()
+    {
+        return View(await _context.Ayudantias.ToListAsync());
+    }
+
+    public async Task<IActionResult> EditSearch()
+    {
+        return View(await _context.Ayudantias.ToListAsync());
+    }
 }

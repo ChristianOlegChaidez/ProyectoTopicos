@@ -1,0 +1,51 @@
+@model ProyectoTopicos.Models.Ayudantias_Investigacion
+
+@{
+    ViewData["Title"] = "Confirmar Eliminar";
+}
+
+<style>
+    .uabc-header {
+        background-color: #1a5c2a;
+        color: white;
+        padding: 20px 30px;
+        margin-bottom: 30px;
+        border-radius: 8px;
+    }
+
+        .uabc-header h1 {
+            font-size: 2rem;
+            margin: 0;
+            font-weight: bold;
+        }
+</style>
+
+<div class="uabc-header">
+    <h1>Confirmar Eliminación</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h5>¿Estás seguro que deseas eliminar esta ayudantía?</h5>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-5">Clave Ayudantía</dt>
+                <dd class="col-sm-7">@Model.Clave_Ayudantias</dd>
+                <dt class="col-sm-5">Matrícula</dt>
+                <dd class="col-sm-7">@Model.Matricula</dd>
+                <dt class="col-sm-5">Nombre Alumno</dt>
+                <dd class="col-sm-7">@Model.Nombre_Alumno</dd>
+                <dt class="col-sm-5">Ayudantía</dt>
+                <dd class="col-sm-7">@Model.Nombre_de_Ayudantia</dd>
+                <dt class="col-sm-5">Empleado</dt>
+                <dd class="col-sm-7">@Model.Nombre_Empleado</dd>
+            </dl>
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Clave_Ayudantias" />
+                <input type="submit" value="Confirmar Eliminar" class="btn btn-danger" />
+                <a asp-action="DeleteSearch" class="btn btn-secondary ms-2">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
