@@ -5,21 +5,32 @@
 }
 
 <style>
+    nav {
+        display: none;
+    }
+
     .uabc-header {
-        background-color: #1a5c2a;
+        background-color: #1b5e3f;
         color: white;
         padding: 20px 30px;
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 30px;
         margin-bottom: 30px;
         border-radius: 8px;
     }
 
-        .uabc-header h1 {
-            font-size: 2rem;
-            margin: 0;
-        }
+    .logo-uabc-header {
+        height: 80px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .uabc-header h1 {
+        font-size: 2rem;
+        margin: 0;
+        font-weight: bold;
+    }
 
     .autocomplete-wrapper {
         position: relative;
@@ -45,128 +56,292 @@
             .autocomplete-list div:hover {
                 background-color: #f0f0f0;
             }
+
+    .form-control.is-invalid {
+        border-color: #dc3545;
+    }
+
+    .invalid-feedback {
+        display: block;
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    .form-control.is-valid {
+        border-color: #28a745;
+    }
+
+    .alert-validacion {
+        display: none;
+        margin-bottom: 20px;
+    }
+
+        .alert-validacion.show {
+            display: block;
+        }
+
+    .text-danger {
+        color: red;
+    }
 </style>
 
 <div class="uabc-header">
+    <img src="~/images/logo-uabc.png" alt="Logo UABC" class="logo-uabc-header">
     <h1>Agregar Ayudantía de Investigación</h1>
+</div>
+
+<!-- ALERTA DE VALIDACIÓN -->
+<div class="alert alert-danger alert-validacion" id="alertaValidacion" role="alert">
+    <strong>⚠️ Errores de validación:</strong>
+    <ul id="listaErrores" style="margin-top: 10px; margin-bottom: 0;"></ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form id="formAyudantia" asp-action="Create" novalidate>
 
-            <div class="form-group">
-                <label>Clave Ayudantía</label>
-                <input asp-for="Clave_Ayudantias" class="form-control" placeholder="Ej. 1001" />
+            <!-- CLAVE AYUDANTÍA -->
+            <div class="form-group mb-3">
+                <label class="form-label">Clave Ayudantía <span class="text-danger">*</span></label>
+                <input asp-for="Clave_Ayudantias" class="form-control"
+                       id="Clave_Ayudantias" placeholder="Ej. 1001" required />
                 <span asp-validation-for="Clave_Ayudantias" class="text-danger"></span>
+                <div class="invalid-feedback">La clave de ayudantía es requerida.</div>
             </div>
 
-            <h5 class="mt-3">Datos del Alumno</h5>
+            <!-- DATOS DEL ALUMNO -->
+            <h5 class="mt-4 mb-3"><strong>Datos del Alumno</strong></h5>
 
-            <div class="form-group autocomplete-wrapper">
-                <label>Matrícula</label>
-                <input id="buscarAlumno" class="form-control" placeholder="Escribe matrícula o nombre..." autocomplete="off" />
+            <div class="form-group autocomplete-wrapper mb-3">
+                <label class="form-label">Buscar Alumno <span class="text-danger">*</span></label>
+                <input id="buscarAlumno" class="form-control"
+                       placeholder="Escribe matrícula o nombre..."
+                       autocomplete="off" required />
                 <div class="autocomplete-list" id="listaAlumnos"></div>
                 <input asp-for="Matricula" type="hidden" id="Matricula" />
-            </div>
-            <div class="form-group">
-                <label>Nombre Alumno</label>
-                <input asp-for="Nombre_Alumno" class="form-control" id="Nombre_Alumno" readonly />
+                <div class="invalid-feedback">Debe seleccionar un alumno de la lista.</div>
             </div>
 
-            <h5 class="mt-3">Datos de la Materia</h5>
+            <div class="form-group mb-3">
+                <label class="form-label">Nombre Alumno</label>
+                <input asp-for="Nombre_Alumno" class="form-control"
+                       id="Nombre_Alumno" readonly />
+            </div>
 
-            <div class="form-group autocomplete-wrapper">
-                <label>Nombre de Ayudantía</label>
-                <input id="buscarMateria" class="form-control" placeholder="Escribe nombre de materia..." autocomplete="off" />
+            <!-- DATOS DE LA MATERIA -->
+            <h5 class="mt-4 mb-3"><strong>Datos de la Materia</strong></h5>
+
+            <div class="form-group autocomplete-wrapper mb-3">
+                <label class="form-label">Buscar Materia <span class="text-danger">*</span></label>
+                <input id="buscarMateria" class="form-control"
+                       placeholder="Escribe nombre de materia..."
+                       autocomplete="off" required />
                 <div class="autocomplete-list" id="listaMaterias"></div>
                 <input asp-for="Nombre_de_Ayudantia" type="hidden" id="Nombre_de_Ayudantia" />
-            </div>
-            <div class="form-group">
-                <label>Programa Educativo</label>
-                <input asp-for="Programa_Educativo" class="form-control" id="Programa_Educativo" readonly />
-            </div>
-            <div class="form-group">
-                <label>No. Programa Educativo</label>
-                <input asp-for="No_Programa_Educativo" class="form-control" id="No_Programa_Educativo" readonly />
-            </div>
-            <div class="form-group">
-                <label>Plan de Estudios</label>
-                <input asp-for="Plan_Estudios" class="form-control" id="Plan_Estudios" readonly />
-            </div>
-            <div class="form-group">
-                <label>Créditos</label>
-                <input asp-for="Creditos_de_Ayudantia" class="form-control" id="Creditos_de_Ayudantia" readonly />
+                <div class="invalid-feedback">Debe seleccionar una materia de la lista.</div>
             </div>
 
-            <h5 class="mt-3">Datos del Maestro</h5>
+            <div class="form-group mb-3">
+                <label class="form-label">Programa Educativo</label>
+                <input asp-for="Programa_Educativo" class="form-control"
+                       id="Programa_Educativo" readonly />
+            </div>
 
-            <div class="form-group autocomplete-wrapper">
-                <label>No. de Empleado</label>
-                <input id="buscarMaestro" class="form-control" placeholder="Escribe número o nombre..." autocomplete="off" />
+            <div class="form-group mb-3">
+                <label class="form-label">No. Programa Educativo</label>
+                <input asp-for="No_Programa_Educativo" class="form-control"
+                       id="No_Programa_Educativo" readonly />
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Plan de Estudios</label>
+                <input asp-for="Plan_Estudios" class="form-control"
+                       id="Plan_Estudios" readonly />
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Créditos</label>
+                <input asp-for="Creditos_de_Ayudantia" class="form-control"
+                       id="Creditos_de_Ayudantia" readonly />
+            </div>
+
+            <!-- DATOS DEL MAESTRO -->
+            <h5 class="mt-4 mb-3"><strong>Datos del Maestro</strong></h5>
+
+            <div class="form-group autocomplete-wrapper mb-3">
+                <label class="form-label">Buscar Maestro <span class="text-danger">*</span></label>
+                <input id="buscarMaestro" class="form-control"
+                       placeholder="Escribe número o nombre..."
+                       autocomplete="off" required />
                 <div class="autocomplete-list" id="listaMaestros"></div>
                 <input asp-for="No_de_Empleado" type="hidden" id="No_de_Empleado" />
-            </div>
-            <div class="form-group">
-                <label>Nombre Empleado</label>
-                <input asp-for="Nombre_Empleado" class="form-control" id="Nombre_Empleado" readonly />
+                <div class="invalid-feedback">Debe seleccionar un maestro de la lista.</div>
             </div>
 
+            <div class="form-group mb-3">
+                <label class="form-label">Nombre Empleado</label>
+                <input asp-for="Nombre_Empleado" class="form-control"
+                       id="Nombre_Empleado" readonly />
+            </div>
+
+            <!-- BOTONES -->
             <div class="form-group mt-4">
-                <input type="submit" value="Guardar" class="btn btn-success" />
+                <button type="submit" class="btn btn-success">Guardar</button>
                 <a asp-action="Index" class="btn btn-secondary ms-2">Cancelar</a>
             </div>
+
         </form>
     </div>
 </div>
 
 @section Scripts {
-    <script>
-        const alumnos = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Alumnos));
-        const maestros = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Maestros));
-        const materias = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Materias));
+    <script type="text/javascript">
+        var alumnos = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Alumnos ?? new List<object>()));
+        var maestros = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Maestros ?? new List<object>()));
+        var materias = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Materias ?? new List<object>()));
 
-        function autocomplete(inputId, listId, data, searchFields, onSelect) {
+        // Flags para validar selecciones
+        var alumnoSeleccionado = false;
+        var materiaSeleccionada = false;
+        var maestroSeleccionado = false;
+
+        // FUNCIÓN DE AUTOCOMPLETE
+        function autocomplete(inputId, listId, data, searchFields, onSelect, flagName) {
             const input = document.getElementById(inputId);
             const list = document.getElementById(listId);
+
             input.addEventListener('input', function () {
                 const q = this.value.toLowerCase();
                 list.innerHTML = '';
-                if (!q) { list.style.display = 'none'; return; }
-                const filtered = data.filter(d => searchFields.some(f => String(d[f]).toLowerCase().includes(q)));
-                if (filtered.length === 0) { list.style.display = 'none'; return; }
-                filtered.forEach(item => {
+
+                if (!q) {
+                    list.style.display = 'none';
+                    window[flagName] = false;
+                    return;
+                }
+
+                const filtered = data.filter(function(d) {
+                    return searchFields.some(function(f) {
+                        return String(d[f]).toLowerCase().includes(q);
+                    });
+                });
+
+                if (filtered.length === 0) {
+                    list.style.display = 'none';
+                    window[flagName] = false;
+                    return;
+                }
+
+                filtered.forEach(function(item) {
                     const div = document.createElement('div');
-                    div.textContent = searchFields.map(f => item[f]).join(' - ');
-                    div.addEventListener('click', () => {
+                    div.textContent = searchFields.map(function(f) { return item[f]; }).join(' - ');
+
+                    div.addEventListener('click', function() {
                         input.value = div.textContent;
                         list.style.display = 'none';
+                        window[flagName] = true;
+
+                        // Estilos de validación
+                        input.classList.add('is-valid');
+                        input.classList.remove('is-invalid');
+
                         onSelect(item);
                     });
+
                     list.appendChild(div);
                 });
+
                 list.style.display = 'block';
             });
-            document.addEventListener('click', e => { if (!input.contains(e.target)) list.style.display = 'none'; });
+
+            input.addEventListener('blur', function() {
+                if (!window[flagName] && this.value.trim() !== '') {
+                    this.classList.add('is-invalid');
+                    this.classList.remove('is-valid');
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!input.contains(e.target)) {
+                    list.style.display = 'none';
+                }
+            });
         }
 
-        autocomplete('buscarAlumno', 'listaAlumnos', alumnos, ['Matricula', 'Nombre'], item => {
+        // CONFIGURAR AUTOCOMPLETES
+        autocomplete('buscarAlumno', 'listaAlumnos', alumnos, ['Matricula', 'Nombre'], function(item) {
             document.getElementById('Matricula').value = item.Matricula;
             document.getElementById('Nombre_Alumno').value = item.Nombre;
-        });
+        }, 'alumnoSeleccionado');
 
-        autocomplete('buscarMateria', 'listaMaterias', materias, ['NombreUA', 'NombrePE'], item => {
+        autocomplete('buscarMateria', 'listaMaterias', materias, ['NombreUA', 'NombrePE'], function(item) {
             document.getElementById('Nombre_de_Ayudantia').value = item.NombreUA;
             document.getElementById('Programa_Educativo').value = item.NombrePE;
             document.getElementById('No_Programa_Educativo').value = item.NoPE;
             document.getElementById('Plan_Estudios').value = item.PlanDeEstudios;
             document.getElementById('Creditos_de_Ayudantia').value = item.Creditos;
-        });
+        }, 'materiaSeleccionada');
 
-        autocomplete('buscarMaestro', 'listaMaestros', maestros, ['Numero_Empleado', 'Nombre'], item => {
+        autocomplete('buscarMaestro', 'listaMaestros', maestros, ['Numero_Empleado', 'Nombre'], function(item) {
             document.getElementById('No_de_Empleado').value = item.Numero_Empleado;
             document.getElementById('Nombre_Empleado').value = item.Nombre;
+        }, 'maestroSeleccionado');
+
+        // VALIDAR FORMULARIO ANTES DE ENVIAR
+        document.getElementById('formAyudantia').addEventListener('submit', function(e) {
+            var isValid = true;
+            var errores = [];
+
+            // Validar Clave
+            var clave = document.getElementById('Clave_Ayudantias').value.trim();
+            if (!clave) {
+                errores.push('La clave de ayudantía es requerida.');
+                isValid = false;
+            }
+
+            // Validar Alumno
+            if (!alumnoSeleccionado || !document.getElementById('Matricula').value) {
+                document.getElementById('buscarAlumno').classList.add('is-invalid');
+                errores.push('Debe seleccionar un alumno válido de la lista.');
+                isValid = false;
+            }
+
+            // Validar Materia
+            if (!materiaSeleccionada || !document.getElementById('Nombre_de_Ayudantia').value) {
+                document.getElementById('buscarMateria').classList.add('is-invalid');
+                errores.push('Debe seleccionar una materia válida de la lista.');
+                isValid = false;
+            }
+
+            // Validar Maestro
+            if (!maestroSeleccionado || !document.getElementById('No_de_Empleado').value) {
+                document.getElementById('buscarMaestro').classList.add('is-invalid');
+                errores.push('Debe seleccionar un maestro válido de la lista.');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Mostrar alerta con errores
+                var alerta = document.getElementById('alertaValidacion');
+                var listaErrores = document.getElementById('listaErrores');
+
+                listaErrores.innerHTML = '';
+                errores.forEach(function(error) {
+                    var li = document.createElement('li');
+                    li.textContent = error;
+                    listaErrores.appendChild(li);
+                });
+
+                alerta.classList.add('show');
+                alerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            this.classList.add('was-validated');
         });
     </script>
 }

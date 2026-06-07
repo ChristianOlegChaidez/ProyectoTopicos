@@ -5,25 +5,36 @@
 }
 
 <style>
+    /* Ocultar la barra de navegación */
+    nav {
+        display: none;
+    }
+
     .uabc-header {
-        background-color: #1a5c2a;
+        background-color: #1b5e3f;
         color: white;
         padding: 20px 30px;
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 30px;
         margin-bottom: 30px;
         border-radius: 8px;
     }
 
-        .uabc-header h1 {
-            font-size: 2rem;
-            margin: 0;
-            font-weight: bold;
-        }
+    .logo-uabc-header {
+        height: 80px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .uabc-header h1 {
+        font-size: 2rem;
+        margin: 0;
+        font-weight: bold;
+    }
 
     .btn-uabc {
-        background-color: #1a5c2a;
+        background-color: #1b5e3f;
         color: white;
         border: none;
         padding: 12px 0;
@@ -33,7 +44,7 @@
     }
 
         .btn-uabc:hover {
-            background-color: #145023;
+            background-color: #0d3a23;
             color: white;
         }
 
@@ -47,6 +58,7 @@
 </style>
 
 <div class="uabc-header">
+    <img src="~/images/logo-uabc.png" alt="Logo UABC" class="logo-uabc-header">
     <h1>Ayudantias de Investigacion</h1>
 </div>
 

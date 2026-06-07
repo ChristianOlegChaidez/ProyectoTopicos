@@ -5,19 +5,33 @@
 }
 
 <style>
+    /* Ocultar la barra de navegación */
+    nav {
+        display: none;
+    }
+
     .uabc-header {
-        background-color: #1a5c2a;
+        background-color: #1b5e3f;
         color: white;
         padding: 20px 30px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
         margin-bottom: 30px;
         border-radius: 8px;
     }
 
-        .uabc-header h1 {
-            font-size: 2rem;
-            margin: 0;
-            font-weight: bold;
-        }
+    .logo-uabc-header {
+        height: 80px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .uabc-header h1 {
+        font-size: 2rem;
+        margin: 0;
+        font-weight: bold;
+    }
 
     .form-label {
         font-weight: 600;
@@ -25,7 +39,7 @@
     }
 
     .btn-uabc {
-        background-color: #1a5c2a;
+        background-color: #1b5e3f;
         color: white;
         border: none;
         padding: 10px 30px;
@@ -34,7 +48,7 @@
     }
 
         .btn-uabc:hover {
-            background-color: #145023;
+            background-color: #0d3a23;
             color: white;
         }
 
@@ -71,6 +85,7 @@
 </style>
 
 <div class="uabc-header">
+    <img src="~/images/logo-uabc.png" alt="Logo UABC" class="logo-uabc-header">
     <h1>Modificar Ayudantía de Investigación</h1>
 </div>
 
@@ -149,52 +164,52 @@
 </div>
 
 @section Scripts {
-    <script>
-        const alumnos = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Alumnos));
-        const maestros = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Maestros));
-        const materias = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Materias));
+<script>
+    const alumnos = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Alumnos));
+    const maestros = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Maestros));
+    const materias = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Materias));
 
-        function autocomplete(inputId, listId, data, searchFields, onSelect) {
-            const input = document.getElementById(inputId);
-            const list = document.getElementById(listId);
-            input.addEventListener('input', function () {
-                const q = this.value.toLowerCase();
-                list.innerHTML = '';
-                if (!q) { list.style.display = 'none'; return; }
-                const filtered = data.filter(d => searchFields.some(f => String(d[f]).toLowerCase().includes(q)));
-                if (filtered.length === 0) { list.style.display = 'none'; return; }
-                filtered.forEach(item => {
-                    const div = document.createElement('div');
-                    div.textContent = searchFields.map(f => item[f]).join(' - ');
-                    div.addEventListener('click', () => {
-                        input.value = div.textContent;
-                        list.style.display = 'none';
-                        onSelect(item);
-                    });
-                    list.appendChild(div);
+    function autocomplete(inputId, listId, data, searchFields, onSelect) {
+        const input = document.getElementById(inputId);
+        const list = document.getElementById(listId);
+        input.addEventListener('input', function () {
+            const q = this.value.toLowerCase();
+            list.innerHTML = '';
+            if (!q) { list.style.display = 'none'; return; }
+            const filtered = data.filter(d => searchFields.some(f => String(d[f]).toLowerCase().includes(q)));
+            if (filtered.length === 0) { list.style.display = 'none'; return; }
+            filtered.forEach(item => {
+                const div = document.createElement('div');
+                div.textContent = searchFields.map(f => item[f]).join(' - ');
+                div.addEventListener('click', () => {
+                    input.value = div.textContent;
+                    list.style.display = 'none';
+                    onSelect(item);
                 });
-                list.style.display = 'block';
+                list.appendChild(div);
             });
-            document.addEventListener('click', e => { if (!input.contains(e.target)) list.style.display = 'none'; });
-        }
-
-        autocomplete('buscarAlumno', 'listaAlumnos', alumnos, ['Matricula', 'Nombre'], item => {
-            document.getElementById('Matricula').value = item.Matricula;
-            document.getElementById('MatriculaVisible').value = item.Matricula;
-            document.getElementById('Nombre_Alumno').value = item.Nombre;
+            list.style.display = 'block';
         });
+        document.addEventListener('click', e => { if (!input.contains(e.target)) list.style.display = 'none'; });
+    }
 
-        autocomplete('buscarMateria', 'listaMaterias', materias, ['NombreUA', 'NombrePE'], item => {
-            document.getElementById('Nombre_de_Ayudantia').value = item.NombreUA;
-            document.getElementById('Programa_Educativo').value = item.NombrePE;
-            document.getElementById('No_Programa_Educativo').value = item.NoPE;
-            document.getElementById('Plan_Estudios').value = item.PlanDeEstudios;
-            document.getElementById('Creditos_de_Ayudantia').value = item.Creditos;
-        });
+    autocomplete('buscarAlumno', 'listaAlumnos', alumnos, ['Matricula', 'Nombre'], item => {
+        document.getElementById('Matricula').value = item.Matricula;
+        document.getElementById('MatriculaVisible').value = item.Matricula;
+        document.getElementById('Nombre_Alumno').value = item.Nombre;
+    });
 
-        autocomplete('buscarMaestro', 'listaMaestros', maestros, ['Numero_Empleado', 'Nombre'], item => {
-            document.getElementById('No_de_Empleado').value = item.Numero_Empleado;
-            document.getElementById('Nombre_Empleado').value = item.Nombre;
-        });
-    </script>
+    autocomplete('buscarMateria', 'listaMaterias', materias, ['NombreUA', 'NombrePE'], item => {
+        document.getElementById('Nombre_de_Ayudantia').value = item.NombreUA;
+        document.getElementById('Programa_Educativo').value = item.NombrePE;
+        document.getElementById('No_Programa_Educativo').value = item.NoPE;
+        document.getElementById('Plan_Estudios').value = item.PlanDeEstudios;
+        document.getElementById('Creditos_de_Ayudantia').value = item.Creditos;
+    });
+
+    autocomplete('buscarMaestro', 'listaMaestros', maestros, ['Numero_Empleado', 'Nombre'], item => {
+        document.getElementById('No_de_Empleado').value = item.Numero_Empleado;
+        document.getElementById('Nombre_Empleado').value = item.Nombre;
+    });
+</script>
 }

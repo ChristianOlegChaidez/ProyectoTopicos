@@ -5,19 +5,32 @@
 }
 
 <style>
+    nav {
+        display: none;
+    }
+
     .uabc-header {
-        background-color: #1a5c2a;
+        background-color: #1b5e3f;
         color: white;
         padding: 20px 30px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
         margin-bottom: 30px;
         border-radius: 8px;
     }
 
-        .uabc-header h1 {
-            font-size: 2rem;
-            margin: 0;
-            font-weight: bold;
-        }
+    .logo-uabc-header {
+        height: 80px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .uabc-header h1 {
+        font-size: 2rem;
+        margin: 0;
+        font-weight: bold;
+    }
 
     .tabla-container {
         border: 2px solid #ccc;
@@ -26,10 +39,25 @@
         padding: 10px;
         margin-top: 20px;
     }
+
+    .btn-uabc {
+        background-color: #1b5e3f;
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        font-size: 1rem;
+        border-radius: 6px;
+    }
+
+    .btn-uabc:hover {
+        background-color: #0d3a23;
+        color: white;
+    }
 </style>
 
 <div class="uabc-header">
-    <h1>Eliminar Ayudantía de Investigación</h1>
+    <img src="~/images/logo-uabc.png" alt="Logo UABC" class="logo-uabc-header">
+    <h1>Eliminacion Ayudantía de Investigación</h1>
 </div>
 
 <div class="mb-3">
