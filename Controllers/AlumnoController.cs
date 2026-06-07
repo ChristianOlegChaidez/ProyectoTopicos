@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoTopicos.Models;
 
-public class AlumnoesController : Controller
+public class AlumnoController : Controller
 {
     private readonly ProyectoTopicosContext _context;
 
-    public AlumnoesController(ProyectoTopicosContext context)
+    public AlumnoController(ProyectoTopicosContext context)
     {
         _context = context;
     }
