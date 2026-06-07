@@ -1,0 +1,12 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace ProyectoTopicos.Views.UnidadAprendizajeAsesoria
+{
+    public class IndexModel : PageModel
+    {
+        public void OnGet()
+        {
+        }
+    }
+}

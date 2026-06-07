@@ -1,0 +1,105 @@
+﻿@model ProyectoTopicos.Models.UnidadAprendizajeAsesoria
+
+@{
+    ViewData["Title"] = "Modificar";
+}
+
+<style>
+    .header-bar {
+        background: #1a5c2e;
+        color: white;
+        padding: 1.2rem 2rem;
+        border-radius: 8px 8px 0 0;
+        font-size: 22px;
+        font-weight: 500;
+    }
+    .btn-verde {
+        background: #1a5c2e;
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .btn-verde:hover { background: #0f3d1e; color: white; }
+    .btn-cancelar {
+        background: #888;
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .btn-cancelar:hover { background: #555; color: white; }
+</style>
+
+<div style="border: 1.5px solid #bbb; border-radius: 10px; overflow: hidden; max-width: 700px; margin: auto;">
+    <div class="header-bar">Modificar Registro</div>
+    <div style="padding: 1.5rem; background: white;">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="No" />
+
+            <div class="mb-3">
+                <label asp-for="No" class="form-label"></label>
+                <input asp-for="No" class="form-control" readonly />
+            </div>
+            <div class="mb-3">
+                <label asp-for="No_de_programa_Educativo" class="form-label"></label>
+                <input asp-for="No_de_programa_Educativo" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Programa_Educativo" class="form-label"></label>
+                <input asp-for="Programa_Educativo" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Plan_de_estudios" class="form-label"></label>
+                <input asp-for="Plan_de_estudios" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Matricula_del_Alumno" class="form-label"></label>
+                <input asp-for="Matricula_del_Alumno" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Nombre_del_Alumno" class="form-label"></label>
+                <input asp-for="Nombre_del_Alumno" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Clave_de_la_materia" class="form-label"></label>
+                <input asp-for="Clave_de_la_materia" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Nombre_de_la_Unidad_de_Aprendizaje_por_asesoria_Academica" class="form-label"></label>
+                <input asp-for="Nombre_de_la_Unidad_de_Aprendizaje_por_asesoria_Academica" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Creditos_de_la_Unidad_de_Aprendizaje" class="form-label"></label>
+                <input asp-for="Creditos_de_la_Unidad_de_Aprendizaje" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="No_de_empleado" class="form-label"></label>
+                <input asp-for="No_de_empleado" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Nombre_del_profesor" class="form-label"></label>
+                <input asp-for="Nombre_del_profesor" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Grupo" class="form-label"></label>
+                <input asp-for="Grupo" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="CAPTURADO" class="form-label"></label>
+                <input asp-for="CAPTURADO" class="form-check-input" type="checkbox" />
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 1.5rem;">
+                <button type="submit" class="btn-verde">Guardar</button>
+                <a asp-action="Index" class="btn-cancelar">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,57 +1,20 @@
-@model ProyectoTopicos.Models.UnidadAprendizajeAsesoria
+﻿@model ProyectoTopicos.Models.UnidadAprendizajeAsesoria
 
 @{
     ViewData["Title"] = "Agregar";
 }
 
 <style>
-    .header-bar {
-        background: #1a5c2e;
-        color: white;
-        padding: 1.2rem 2rem;
-        border-radius: 8px 8px 0 0;
-        font-size: 22px;
-        font-weight: 500;
-    }
-    .btn-verde {
-        background: #1a5c2e;
-        color: white;
-        border: none;
-        padding: 10px 30px;
-        border-radius: 6px;
-        font-size: 16px;
-        cursor: pointer;
-    }
+    .header-bar { background: #1a5c2e; color: white; padding: 1.2rem 2rem; border-radius: 8px 8px 0 0; font-size: 22px; font-weight: 500; }
+    .btn-verde { background: #1a5c2e; color: white; border: none; padding: 10px 30px; border-radius: 6px; font-size: 16px; cursor: pointer; }
     .btn-verde:hover { background: #0f3d1e; color: white; }
-    .btn-cancelar {
-        background: #888;
-        color: white;
-        border: none;
-        padding: 10px 30px;
-        border-radius: 6px;
-        font-size: 16px;
-        text-decoration: none;
-    }
+    .btn-cancelar { background: #888; color: white; border: none; padding: 10px 30px; border-radius: 6px; font-size: 16px; text-decoration: none; }
     .btn-cancelar:hover { background: #555; color: white; }
     .autocomplete-wrap { position: relative; }
-    .autocomplete-list {
-        position: absolute;
-        z-index: 999;
-        background: white;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        width: 100%;
-        max-height: 200px;
-        overflow-y: auto;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .autocomplete-list div {
-        padding: 8px 12px;
-        cursor: pointer;
-        font-size: 14px;
-    }
+    .autocomplete-list { position: absolute; z-index: 999; background: white; border: 1px solid #ccc; border-radius: 6px; width: 100%; max-height: 200px; overflow-y: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .autocomplete-list div { padding: 8px 12px; cursor: pointer; font-size: 14px; }
     .autocomplete-list div:hover { background: #f0fff0; }
-    .campo-auto { background: #f0fff0; }
+    .campo-auto { background: #white; }
 </style>
 
 <div style="border: 1.5px solid #bbb; border-radius: 10px; overflow: hidden; max-width: 700px; margin: auto;">
@@ -60,69 +23,82 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            <!-- 1. No -->
             <div class="mb-3">
                 <label asp-for="No" class="form-label"></label>
                 <input asp-for="No" class="form-control" />
             </div>
 
+            <!-- 2. No de programa Educativo -->
             <div class="mb-3">
                 <label asp-for="No_de_programa_Educativo" class="form-label"></label>
-                <input asp-for="No_de_programa_Educativo" class="form-control" />
+                <input asp-for="Programa_Educativo" class="form-control" id="programaEducativo" />
             </div>
 
+            <!-- 3. Programa Educativo -->
             <div class="mb-3">
                 <label asp-for="Programa_Educativo" class="form-label"></label>
                 <input asp-for="Programa_Educativo" class="form-control" />
             </div>
 
+            <!-- 4. Plan de estudios -->
             <div class="mb-3">
                 <label asp-for="Plan_de_estudios" class="form-label"></label>
-                <input asp-for="Plan_de_estudios" class="form-control" />
+                <input asp-for="Plan_de_estudios" class="form-control" id="planEstudios" />
             </div>
 
+            <!-- 5. Matricula del Alumno -->
             <div class="mb-3">
                 <label asp-for="Matricula_del_Alumno" class="form-label"></label>
                 <input asp-for="Matricula_del_Alumno" class="form-control" id="matricula" />
             </div>
 
+            <!-- 6. Nombre del Alumno (autocompletado al escribir) -->
             <div class="mb-3 autocomplete-wrap">
                 <label asp-for="Nombre_del_Alumno" class="form-label"></label>
                 <input asp-for="Nombre_del_Alumno" class="form-control campo-auto" id="nombreAlumno" autocomplete="off" />
                 <div class="autocomplete-list" id="listaAlumnos" style="display:none;"></div>
             </div>
 
+            <!-- 7. Clave de la materia -->
             <div class="mb-3">
                 <label asp-for="Clave_de_la_materia" class="form-label"></label>
                 <input asp-for="Clave_de_la_materia" class="form-control" id="claveMateria" />
             </div>
 
+            <!-- 8. Nombre de la Unidad de Aprendizaje (autocompletado al escribir) -->
             <div class="mb-3 autocomplete-wrap">
                 <label asp-for="Nombre_de_la_Unidad_de_Aprendizaje_por_asesoria_Academica" class="form-label"></label>
                 <input asp-for="Nombre_de_la_Unidad_de_Aprendizaje_por_asesoria_Academica" class="form-control campo-auto" id="nombreMateria" autocomplete="off" />
                 <div class="autocomplete-list" id="listaMaterias" style="display:none;"></div>
             </div>
 
+            <!-- 9. Creditos -->
             <div class="mb-3">
                 <label asp-for="Creditos_de_la_Unidad_de_Aprendizaje" class="form-label"></label>
                 <input asp-for="Creditos_de_la_Unidad_de_Aprendizaje" class="form-control campo-auto" id="creditos" />
             </div>
 
+            <!-- 10. No. de empleado -->
             <div class="mb-3">
                 <label asp-for="No_de_empleado" class="form-label"></label>
                 <input asp-for="No_de_empleado" class="form-control" id="noEmpleado" />
             </div>
 
+            <!-- 11. Nombre del profesor (autocompletado al escribir) -->
             <div class="mb-3 autocomplete-wrap">
                 <label asp-for="Nombre_del_profesor" class="form-label"></label>
                 <input asp-for="Nombre_del_profesor" class="form-control campo-auto" id="nombreProfesor" autocomplete="off" />
                 <div class="autocomplete-list" id="listaMaestros" style="display:none;"></div>
             </div>
 
+            <!-- 12. Grupo -->
             <div class="mb-3">
                 <label asp-for="Grupo" class="form-label"></label>
                 <input asp-for="Grupo" class="form-control" />
             </div>
 
+            <!-- 13. CAPTURADO -->
             <div class="mb-3">
                 <label asp-for="CAPTURADO" class="form-label"></label>
                 <input asp-for="CAPTURADO" class="form-check-input" type="checkbox" />
@@ -167,6 +143,7 @@
         });
     }
 
+    // Nombre del alumno → autocompleta matrícula
     autocomplete('nombreAlumno', 'listaAlumnos',
         '/UnidadAprendizajeAsesoria/BuscarAlumno?nombre=',
         {
@@ -177,7 +154,8 @@
         }
     );
 
-    autocomplete('nombreMateria', 'listaMaterias',
+    // Nombre de la materia → autocompleta clave y créditos
+autocomplete('nombreMateria', 'listaMaterias',
     '/UnidadAprendizajeAsesoria/BuscarMateria?nombre=',
     {
         label: item => item.nombreUA,
@@ -191,6 +169,7 @@
     }
 );
 
+    // Nombre del profesor → autocompleta no de empleado
     autocomplete('nombreProfesor', 'listaMaestros',
         '/UnidadAprendizajeAsesoria/BuscarMaestro?nombre=',
         {
