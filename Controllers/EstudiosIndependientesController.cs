@@ -18,6 +18,14 @@ namespace ProyectoTopicos.Controllers
             _context = context;
         }
 
+        // Helper para cargar ViewBag
+        private void CargarViewBag()
+        {
+            ViewBag.Alumnos = _context.Alumno.Where(a => a.Nombre != null).ToList();
+            ViewBag.Maestros = _context.Maestros.Where(m => m.Nombre != null).ToList();
+            ViewBag.Materias = _context.Materias.ToList();
+        }
+
         // GET: EstudiosIndependientes
         public async Task<IActionResult> Index()
         {
@@ -29,21 +37,36 @@ namespace ProyectoTopicos.Controllers
         {
             if (id == null) return NotFound();
 
-            var estudiosIndependientes = await _context.EstudiosIndependientes
+            var estudio = await _context.EstudiosIndependientes
                 .FirstOrDefaultAsync(m => m.Clave_Estudio_Independiente == id);
 
-            if (estudiosIndependientes == null) return NotFound();
+            if (estudio == null) return NotFound();
 
-            return View(estudiosIndependientes);
+            return View(estudio);
         }
 
         // GET: EstudiosIndependientes/Create
         public IActionResult Create()
         {
-            ViewBag.Alumnos = _context.Alumno.Where(a => a.Nombre != null).ToList();
-            ViewBag.Maestros = _context.Maestros.Where(m => m.Nombre != null).ToList();
-            ViewBag.Materias = _context.Materias.ToList();
+            CargarViewBag();
             return View();
+        }
+
+        // POST: EstudiosIndependientes/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("No_Programa_Educativo,Programa_Educativo,Plan_de_Estudios,Matricula,Nombre_Alumno,Clave_Estudio_Independiente,Nombre_Estudio_Independiente,Creditos_Estudio_Independiente,No_Empleado,Nombre_Profesor_Tutor_Investigar")] EstudiosIndependientes estudio)
+        {
+            if (ModelState.IsValid)
+            {
+                // No = siguiente número consecutivo automático
+                estudio.No = _context.EstudiosIndependientes.Count() + 1;
+                _context.Add(estudio);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            CargarViewBag();
+            return View(estudio);
         }
 
         // GET: EstudiosIndependientes/Edit/5
@@ -51,36 +74,38 @@ namespace ProyectoTopicos.Controllers
         {
             if (id == null) return NotFound();
 
-            var estudiosIndependientes = await _context.EstudiosIndependientes.FindAsync(id);
-            if (estudiosIndependientes == null) return NotFound();
+            var estudio = await _context.EstudiosIndependientes.FindAsync(id);
+            if (estudio == null) return NotFound();
 
-            return View(estudiosIndependientes);
+            CargarViewBag();
+            return View(estudio);
         }
 
         // POST: EstudiosIndependientes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("No,No_Programa_Educativo,Programa_Educativo,Plan_de_Estudios,Matricula,Nombre_Alumno,Clave_Estudio_Independiente,Nombre_Estudio_Independiente,Creditos_Estudio_Independiente,No_Empleado,Nombre_Profesor_Tutor_Investigar")] EstudiosIndependientes estudiosIndependientes)
+        public async Task<IActionResult> Edit(int id, [Bind("No,No_Programa_Educativo,Programa_Educativo,Plan_de_Estudios,Matricula,Nombre_Alumno,Clave_Estudio_Independiente,Nombre_Estudio_Independiente,Creditos_Estudio_Independiente,No_Empleado,Nombre_Profesor_Tutor_Investigar")] EstudiosIndependientes estudio)
         {
-            if (id != estudiosIndependientes.Clave_Estudio_Independiente) return NotFound();
+            if (id != estudio.Clave_Estudio_Independiente) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(estudiosIndependientes);
+                    _context.Update(estudio);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EstudiosIndependientesExists(estudiosIndependientes.Clave_Estudio_Independiente))
+                    if (!EstudiosIndependientesExists(estudio.Clave_Estudio_Independiente))
                         return NotFound();
                     else
                         throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(estudiosIndependientes);
+            CargarViewBag();
+            return View(estudio);
         }
 
         // GET: EstudiosIndependientes/Delete/5
@@ -88,12 +113,12 @@ namespace ProyectoTopicos.Controllers
         {
             if (id == null) return NotFound();
 
-            var estudiosIndependientes = await _context.EstudiosIndependientes
+            var estudio = await _context.EstudiosIndependientes
                 .FirstOrDefaultAsync(m => m.Clave_Estudio_Independiente == id);
 
-            if (estudiosIndependientes == null) return NotFound();
+            if (estudio == null) return NotFound();
 
-            return View(estudiosIndependientes);
+            return View(estudio);
         }
 
         // POST: EstudiosIndependientes/Delete/5
@@ -101,9 +126,9 @@ namespace ProyectoTopicos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var estudiosIndependientes = await _context.EstudiosIndependientes.FindAsync(id);
-            if (estudiosIndependientes != null)
-                _context.EstudiosIndependientes.Remove(estudiosIndependientes);
+            var estudio = await _context.EstudiosIndependientes.FindAsync(id);
+            if (estudio != null)
+                _context.EstudiosIndependientes.Remove(estudio);
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -116,7 +141,6 @@ namespace ProyectoTopicos.Controllers
 
         // ── AUTOCOMPLETADO ────────────────────────────────────────────────────
 
-        // Busca alumno por matrícula → regresa nombre
         [HttpGet]
         public IActionResult GetAlumno(int matricula)
         {
@@ -129,7 +153,6 @@ namespace ProyectoTopicos.Controllers
             return Json(new { encontrado = true, nombre = alumno.Nombre });
         }
 
-        // Busca maestro por número de empleado → regresa nombre
         [HttpGet]
         public IActionResult GetMaestro(string noEmpleado)
         {
@@ -142,7 +165,6 @@ namespace ProyectoTopicos.Controllers
             return Json(new { encontrado = true, nombre = maestro.Nombre });
         }
 
-        // Busca materias por clave → regresa datos
         [HttpGet]
         public IActionResult GetMateria(int claveUA)
         {
