@@ -1,0 +1,194 @@
+@model ProyectoTopicos.Models.EstudiosIndependientes
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+<h4>EstudiosIndependientes</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- No. Programa Educativo (se llena solo) -->
+            <div class="form-group">
+                <label asp-for="No_Programa_Educativo" class="control-label"></label>
+                <input asp-for="No_Programa_Educativo" class="form-control" id="No_Programa_Educativo"
+                       readonly style="background:#f0f0f0;" placeholder="Se llena al seleccionar materia..." />
+                <span asp-validation-for="No_Programa_Educativo" class="text-danger"></span>
+            </div>
+
+            <!-- Programa Educativo (se llena solo) -->
+            <div class="form-group">
+                <label asp-for="Programa_Educativo" class="control-label"></label>
+                <input asp-for="Programa_Educativo" class="form-control" id="Programa_Educativo"
+                       readonly style="background:#f0f0f0;" placeholder="Se llena al seleccionar materia..." />
+                <span asp-validation-for="Programa_Educativo" class="text-danger"></span>
+            </div>
+
+            <!-- Plan de Estudios (se llena solo) -->
+            <div class="form-group">
+                <label asp-for="Plan_de_Estudios" class="control-label"></label>
+                <input asp-for="Plan_de_Estudios" class="form-control" id="Plan_de_Estudios"
+                       readonly style="background:#f0f0f0;" placeholder="Se llena al seleccionar materia..." />
+                <span asp-validation-for="Plan_de_Estudios" class="text-danger"></span>
+            </div>
+
+            <!-- Matrícula con Select2 -->
+            <div class="form-group">
+                <label asp-for="Matricula" class="control-label"></label>
+                <select asp-for="Matricula" class="form-control" id="Matricula">
+                    <option value="">-- Selecciona alumno --</option>
+                    @foreach (var a in ViewBag.Alumnos)
+                    {
+                        <option value="@a.Matricula">@a.Matricula - @a.Nombre</option>
+                    }
+                </select>
+                <span asp-validation-for="Matricula" class="text-danger"></span>
+            </div>
+
+            <!-- Nombre Alumno (se llena solo) -->
+            <div class="form-group">
+                <label asp-for="Nombre_Alumno" class="control-label"></label>
+                <input asp-for="Nombre_Alumno" class="form-control" id="Nombre_Alumno"
+                       readonly style="background:#f0f0f0;" placeholder="Se llena automáticamente..." />
+            </div>
+
+            <!-- Materia con Select2 -->
+            <div class="form-group">
+                <label class="control-label">Nombre Estudio Independiente</label>
+                <select class="form-control" id="SelectMateria">
+                    <option value="">-- Selecciona materia --</option>
+                    @foreach (var m in ViewBag.Materias)
+                    {
+                        <option value="@m.ClaveUA"
+                                data-nombre="@m.NombreUA"
+                                data-pe="@m.NombrePE"
+                                data-plan="@m.PlanDeEstudios"
+                                data-creditos="@m.Creditos"
+                                data-nope="@m.NoPE">
+                            @m.NombreUA - @m.NombrePE
+                        </option>
+                    }
+                </select>
+                <input type="hidden" asp-for="Nombre_Estudio_Independiente" id="Nombre_Estudio_Independiente" />
+            </div>
+
+            <!-- Créditos (se llena solo) -->
+            <div class="form-group">
+                <label asp-for="Creditos_Estudio_Independiente" class="control-label"></label>
+                <input asp-for="Creditos_Estudio_Independiente" class="form-control" id="Creditos_Estudio_Independiente"
+                       readonly style="background:#f0f0f0;" placeholder="Se llena al seleccionar materia..." />
+                <span asp-validation-for="Creditos_Estudio_Independiente" class="text-danger"></span>
+            </div>
+
+            <!-- No. Empleado con Select2 -->
+            <div class="form-group">
+                <label asp-for="No_Empleado" class="control-label"></label>
+                <select asp-for="No_Empleado" class="form-control" id="No_Empleado">
+                    <option value="">-- Selecciona maestro --</option>
+                    @foreach (var m in ViewBag.Maestros)
+                    {
+                        <option value="@m.Numero_Empleado">@m.Numero_Empleado - @m.Nombre</option>
+                    }
+                </select>
+                <span asp-validation-for="No_Empleado" class="text-danger"></span>
+            </div>
+
+            <!-- Nombre Profesor (se llena solo) -->
+            <div class="form-group">
+                <label asp-for="Nombre_Profesor_Tutor_Investigar" class="control-label"></label>
+                <input asp-for="Nombre_Profesor_Tutor_Investigar" class="form-control" id="Nombre_Profesor_Tutor_Investigar"
+                       readonly style="background:#f0f0f0;" placeholder="Se llena automáticamente..." />
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+        // Select2 en Matrícula
+        $('#Matricula').select2({
+        placeholder: "Busca por matrícula o nombre...",
+        allowClear: true,
+        width: '100%'
+        });
+
+        // Select2 en No. Empleado
+        $('#No_Empleado').select2({
+        placeholder: "Busca por no. empleado o nombre...",
+        allowClear: true,
+        width: '100%'
+        });
+
+        // Select2 en Materia
+        $('#SelectMateria').select2({
+        placeholder: "Busca materia...",
+        allowClear: true,
+        width: '100%'
+        });
+
+        // Al seleccionar alumno → llena nombre
+        $('#Matricula').on('change', function () {
+        var texto = $(this).find('option:selected').text();
+        if (texto && texto !== '-- Selecciona alumno --') {
+        var nombre = texto.split(' - ').slice(1).join(' - ');
+        $('#Nombre_Alumno').val(nombre);
+        } else {
+        $('#Nombre_Alumno').val('');
+        }
+        });
+
+        // Al seleccionar maestro → llena nombre
+        $('#No_Empleado').on('change', function () {
+        var texto = $(this).find('option:selected').text();
+        if (texto && texto !== '-- Selecciona maestro --') {
+        var nombre = texto.split(' - ').slice(1).join(' - ');
+        $('#Nombre_Profesor_Tutor_Investigar').val(nombre);
+        } else {
+        $('#Nombre_Profesor_Tutor_Investigar').val('');
+        }
+        });
+
+        // Al seleccionar materia → llena todos los campos relacionados
+        $('#SelectMateria').on('change', function () {
+        var op = $(this).find('option:selected');
+        if (op.val()) {
+        $('#Nombre_Estudio_Independiente').val(op.data('nombre'));
+        $('#Programa_Educativo').val(op.data('pe'));
+        $('#Plan_de_Estudios').val(op.data('plan'));
+        $('#Creditos_Estudio_Independiente').val(op.data('creditos'));
+        $('#No_Programa_Educativo').val(op.data('nope'));
+        } else {
+        $('#Nombre_Estudio_Independiente').val('');
+        $('#Programa_Educativo').val('');
+        $('#Plan_de_Estudios').val('');
+        $('#Creditos_Estudio_Independiente').val('');
+        $('#No_Programa_Educativo').val('');
+        }
+        });
+
+        });
+    </script>
+}
