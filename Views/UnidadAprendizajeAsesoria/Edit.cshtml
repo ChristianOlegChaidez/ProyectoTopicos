@@ -37,7 +37,10 @@
 </style>
 
 <div style="border: 1.5px solid #bbb; border-radius: 10px; overflow: hidden; max-width: 700px; margin: auto;">
-    <div class="header-bar">Modificar Registro</div>
+    <div class="header-bar" style="display: flex; align-items: center; gap: 20px;">
+    <img src="~/images/logo-uabc.png" alt="Logo UABC" style="height: 60px;" />
+    <span>Modificar Registro</span>
+</div>
     <div style="padding: 1.5rem; background: white;">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -92,9 +95,10 @@
                 <input asp-for="Grupo" class="form-control" />
             </div>
             <div class="mb-3">
-                <label asp-for="CAPTURADO" class="form-label"></label>
-                <input asp-for="CAPTURADO" class="form-check-input" type="checkbox" />
-            </div>
+    <label asp-for="CAPTURADO" class="form-label"></label>
+    <input type="checkbox" name="CAPTURADO" value="true" @(Model.CAPTURADO == true ? "checked" : "") />
+    <input type="hidden" name="CAPTURADO" value="false" />
+</div>
 
             <div style="display: flex; gap: 12px; margin-top: 1.5rem;">
                 <button type="submit" class="btn-verde">Guardar</button>

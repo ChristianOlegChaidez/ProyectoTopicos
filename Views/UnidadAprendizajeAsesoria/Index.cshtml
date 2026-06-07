@@ -5,6 +5,8 @@
 }
 
 <style>
+       
+
     .header-bar {
         background: #1a5c2e;
         color: white;
@@ -58,7 +60,10 @@
 
 <div style="border: 1.5px solid #bbb; border-radius: 10px; overflow: hidden;">
 
-    <div class="header-bar">Unidades de Aprendizaje por Asesoría</div>
+    <div class="header-bar" style="display: flex; align-items: center; gap: 20px;">
+    <img src="~/images/logo-uabc.png" alt="Logo UABC" style="height: 60px;" />
+    <span>Unidades de Aprendizaje por Asesoría</span>
+</div>
 
     <div style="background: white; padding: 1.2rem 1.5rem; display: flex; gap: 12px;">
         <a asp-action="Create" class="btn-verde">Agregar</a>
@@ -98,7 +103,7 @@
                             <td>@Html.DisplayFor(model => item.Creditos_de_la_Unidad_de_Aprendizaje)</td>
                             <td>@Html.DisplayFor(model => item.Nombre_del_profesor)</td>
                             <td>@Html.DisplayFor(model => item.Grupo)</td>
-                            <td>@Html.DisplayFor(model => item.CAPTURADO)</td>
+                            <td>@(item.CAPTURADO == true ? "Sí" : "No")</td>
                         </tr>
                     }
                 </tbody>

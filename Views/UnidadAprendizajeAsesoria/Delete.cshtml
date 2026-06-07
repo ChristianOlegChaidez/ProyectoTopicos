@@ -6,23 +6,23 @@
 
 <style>
     .header-bar {
-        background: #8b0000;
-        color: white;
-        padding: 1.2rem 2rem;
-        border-radius: 8px 8px 0 0;
-        font-size: 22px;
-        font-weight: 500;
-    }
-    .btn-eliminar {
-        background: #8b0000;
-        color: white;
-        border: none;
-        padding: 10px 30px;
-        border-radius: 6px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-    .btn-eliminar:hover { background: #5a0000; color: white; }
+    background: #1a5c2e;
+    color: white;
+    padding: 1.2rem 2rem;
+    border-radius: 8px 8px 0 0;
+    font-size: 22px;
+    font-weight: 500;
+}
+.btn-eliminar {
+    background: #1a5c2e;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.btn-eliminar:hover { background: #0f3d1e; color: white; }
     .btn-cancelar {
         background: #888;
         color: white;
@@ -36,7 +36,10 @@
 </style>
 
 <div style="border: 1.5px solid #bbb; border-radius: 10px; overflow: hidden; max-width: 700px; margin: auto;">
-    <div class="header-bar">Eliminar Registro</div>
+    <div class="header-bar" style="display: flex; align-items: center; gap: 20px;">
+    <img src="~/images/logo-uabc.png" alt="Logo UABC" style="height: 60px;" />
+    <span>Eliminar Registro</span>
+</div>
     <div style="padding: 1.5rem; background: white;">
 
         <p style="font-size: 16px; color: #333;">¿Estás seguro que deseas eliminar este registro?</p>

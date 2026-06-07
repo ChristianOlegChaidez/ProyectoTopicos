@@ -112,7 +112,8 @@ public class UnidadAprendizajeAsesoriaController : Controller
         var todos = await _context.Alumno.ToListAsync();
 
         var alumnos = todos
-            .Where(a => NormalizarTexto(a.Nombre).Contains(NormalizarTexto(nombre)))
+            .Where(a => NormalizarTexto(a.Nombre).Contains(NormalizarTexto(nombre))
+                     || a.Matricula.ToString().Contains(nombre))
             .Take(10)
             .Select(a => new { a.Matricula, a.Nombre })
             .ToList();
