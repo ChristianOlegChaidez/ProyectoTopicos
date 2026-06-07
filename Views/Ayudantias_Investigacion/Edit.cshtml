@@ -1,74 +1,200 @@
 @model ProyectoTopicos.Models.Ayudantias_Investigacion
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Modificar Ayudantía";
 }
 
-<h1>Edit</h1>
+<style>
+    .uabc-header {
+        background-color: #1a5c2a;
+        color: white;
+        padding: 20px 30px;
+        margin-bottom: 30px;
+        border-radius: 8px;
+    }
 
-<h4>Ayudantias_Investigacion</h4>
-<hr />
+        .uabc-header h1 {
+            font-size: 2rem;
+            margin: 0;
+            font-weight: bold;
+        }
+
+    .form-label {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .btn-uabc {
+        background-color: #1a5c2a;
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        font-size: 1rem;
+        border-radius: 6px;
+    }
+
+        .btn-uabc:hover {
+            background-color: #145023;
+            color: white;
+        }
+
+    .card-form {
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        padding: 30px;
+    }
+
+    .autocomplete-wrapper {
+        position: relative;
+    }
+
+    .autocomplete-list {
+        position: absolute;
+        z-index: 999;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        display: none;
+    }
+
+        .autocomplete-list div {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+            .autocomplete-list div:hover {
+                background-color: #f0f0f0;
+            }
+</style>
+
+<div class="uabc-header">
+    <h1>Modificar Ayudantía de Investigación</h1>
+</div>
+
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Clave_Ayudantias" />
-            <div class="form-group">
-                <label asp-for="Programa_Educativo" class="control-label"></label>
-                <input asp-for="Programa_Educativo" class="form-control" />
-                <span asp-validation-for="Programa_Educativo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="No_Programa_Educativo" class="control-label"></label>
-                <input asp-for="No_Programa_Educativo" class="form-control" />
-                <span asp-validation-for="No_Programa_Educativo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Plan_Estudios" class="control-label"></label>
-                <input asp-for="Plan_Estudios" class="form-control" />
-                <span asp-validation-for="Plan_Estudios" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Matricula" class="control-label"></label>
-                <input asp-for="Matricula" class="form-control" />
-                <span asp-validation-for="Matricula" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nombre_Alumno" class="control-label"></label>
-                <input asp-for="Nombre_Alumno" class="form-control" />
-                <span asp-validation-for="Nombre_Alumno" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nombre_de_Ayudantia" class="control-label"></label>
-                <input asp-for="Nombre_de_Ayudantia" class="form-control" />
-                <span asp-validation-for="Nombre_de_Ayudantia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Creditos_de_Ayudantia" class="control-label"></label>
-                <input asp-for="Creditos_de_Ayudantia" class="form-control" />
-                <span asp-validation-for="Creditos_de_Ayudantia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="No_de_Empleado" class="control-label"></label>
-                <input asp-for="No_de_Empleado" class="form-control" />
-                <span asp-validation-for="No_de_Empleado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nombre_Empleado" class="control-label"></label>
-                <input asp-for="Nombre_Empleado" class="form-control" />
-                <span asp-validation-for="Nombre_Empleado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="col-md-7">
+        <div class="card-form">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Clave_Ayudantias" />
+
+                <h5 class="mb-3">Datos del Alumno</h5>
+                <div class="form-group autocomplete-wrapper mb-3">
+                    <label class="form-label">Buscar Alumno</label>
+                    <input id="buscarAlumno" class="form-control" placeholder="Escribe matrícula o nombre..." autocomplete="off" value="@Model.Matricula - @Model.Nombre_Alumno" />
+                    <div class="autocomplete-list" id="listaAlumnos"></div>
+                    <input asp-for="Matricula" type="hidden" id="Matricula" />
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Matrícula</label>
+                        <input asp-for="Matricula" class="form-control" id="MatriculaVisible" readonly />
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label">Nombre Alumno</label>
+                        <input asp-for="Nombre_Alumno" class="form-control" id="Nombre_Alumno" readonly />
+                    </div>
+                </div>
+
+                <h5 class="mb-3 mt-4">Datos de la Ayudantía</h5>
+                <div class="form-group autocomplete-wrapper mb-3">
+                    <label class="form-label">Buscar Materia</label>
+                    <input id="buscarMateria" class="form-control" placeholder="Escribe nombre de materia..." autocomplete="off" value="@Model.Nombre_de_Ayudantia" />
+                    <div class="autocomplete-list" id="listaMaterias"></div>
+                    <input asp-for="Nombre_de_Ayudantia" type="hidden" id="Nombre_de_Ayudantia" />
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <label class="form-label">Programa Educativo</label>
+                        <input asp-for="Programa_Educativo" class="form-control" id="Programa_Educativo" readonly />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">No. Programa</label>
+                        <input asp-for="No_Programa_Educativo" class="form-control" id="No_Programa_Educativo" readonly />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Plan de Estudios</label>
+                        <input asp-for="Plan_Estudios" class="form-control" id="Plan_Estudios" readonly />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Créditos</label>
+                        <input asp-for="Creditos_de_Ayudantia" class="form-control" id="Creditos_de_Ayudantia" readonly />
+                    </div>
+                </div>
+
+                <h5 class="mb-3 mt-4">Datos del Maestro</h5>
+                <div class="form-group autocomplete-wrapper mb-3">
+                    <label class="form-label">Buscar Maestro</label>
+                    <input id="buscarMaestro" class="form-control" placeholder="Escribe número o nombre..." autocomplete="off" value="@Model.No_de_Empleado - @Model.Nombre_Empleado" />
+                    <div class="autocomplete-list" id="listaMaestros"></div>
+                    <input asp-for="No_de_Empleado" type="hidden" id="No_de_Empleado" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nombre Empleado</label>
+                    <input asp-for="Nombre_Empleado" class="form-control" id="Nombre_Empleado" readonly />
+                </div>
+
+                <div class="mt-4">
+                    <input type="submit" value="Guardar Cambios" class="btn btn-uabc" />
+                    <a asp-action="EditSearch" class="btn btn-secondary ms-2">Cancelar</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        const alumnos = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Alumnos));
+        const maestros = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Maestros));
+        const materias = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Materias));
+
+        function autocomplete(inputId, listId, data, searchFields, onSelect) {
+            const input = document.getElementById(inputId);
+            const list = document.getElementById(listId);
+            input.addEventListener('input', function () {
+                const q = this.value.toLowerCase();
+                list.innerHTML = '';
+                if (!q) { list.style.display = 'none'; return; }
+                const filtered = data.filter(d => searchFields.some(f => String(d[f]).toLowerCase().includes(q)));
+                if (filtered.length === 0) { list.style.display = 'none'; return; }
+                filtered.forEach(item => {
+                    const div = document.createElement('div');
+                    div.textContent = searchFields.map(f => item[f]).join(' - ');
+                    div.addEventListener('click', () => {
+                        input.value = div.textContent;
+                        list.style.display = 'none';
+                        onSelect(item);
+                    });
+                    list.appendChild(div);
+                });
+                list.style.display = 'block';
+            });
+            document.addEventListener('click', e => { if (!input.contains(e.target)) list.style.display = 'none'; });
+        }
+
+        autocomplete('buscarAlumno', 'listaAlumnos', alumnos, ['Matricula', 'Nombre'], item => {
+            document.getElementById('Matricula').value = item.Matricula;
+            document.getElementById('MatriculaVisible').value = item.Matricula;
+            document.getElementById('Nombre_Alumno').value = item.Nombre;
+        });
+
+        autocomplete('buscarMateria', 'listaMaterias', materias, ['NombreUA', 'NombrePE'], item => {
+            document.getElementById('Nombre_de_Ayudantia').value = item.NombreUA;
+            document.getElementById('Programa_Educativo').value = item.NombrePE;
+            document.getElementById('No_Programa_Educativo').value = item.NoPE;
+            document.getElementById('Plan_Estudios').value = item.PlanDeEstudios;
+            document.getElementById('Creditos_de_Ayudantia').value = item.Creditos;
+        });
+
+        autocomplete('buscarMaestro', 'listaMaestros', maestros, ['Numero_Empleado', 'Nombre'], item => {
+            document.getElementById('No_de_Empleado').value = item.Numero_Empleado;
+            document.getElementById('Nombre_Empleado').value = item.Nombre;
+        });
+    </script>
 }

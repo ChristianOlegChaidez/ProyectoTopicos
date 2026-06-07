@@ -84,16 +84,12 @@ public class Ayudantias_InvestigacionController : Controller
     // GET: AYUDANTIAS_INVESTIGACIONS/Edit/5
     public async Task<IActionResult> Edit(int? clave_ayudantias)
     {
-        if (clave_ayudantias == null)
-        {
-            return NotFound();
-        }
-
+        if (clave_ayudantias == null) return NotFound();
         var ayudantias_investigacion = await _context.Ayudantias.FindAsync(clave_ayudantias);
-        if (ayudantias_investigacion == null)
-        {
-            return NotFound();
-        }
+        if (ayudantias_investigacion == null) return NotFound();
+        ViewBag.Alumnos = _context.Alumno.Where(a => a.Nombre != null).ToList();
+        ViewBag.Maestros = _context.Maestros.Where(m => m.Nombre != null).ToList();
+        ViewBag.Materias = _context.Materias.ToList();
         return View(ayudantias_investigacion);
     }
 
