@@ -12,6 +12,6 @@ public class ProyectoTopicosContext(DbContextOptions<ProyectoTopicosContext> opt
         modelBuilder.Entity<ProyectoTopicos.Models.Alumno>().ToTable("Tabla_Alumnos").HasKey(a => a.Matricula);
         modelBuilder.Entity<ProyectoTopicos.Models.Maestro>().ToTable("Tabla_Maestros").HasKey(m => m.Numero_Empleado);
         modelBuilder.Entity<ProyectoTopicos.Models.Materia>().ToTable("Tabla_Materias").HasKey(m => m.ClaveUA);
-        modelBuilder.Entity<ProyectoTopicos.Models.Ayudantia>().ToTable("Ayudantias").HasKey(a => a.Clave_Ayudantias);
+        modelBuilder.Entity<ProyectoTopicos.Models.Ayudantias>().ToTable("Ayudantias_Investigacion").HasKey(a => a.Clave_Ayudantias);
     }
 }
