@@ -1,79 +1,93 @@
 @model ProyectoTopicos.Models.EstudiosIndependientes
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Modificar Estudio Independiente";
 }
 
-<h1>Edit</h1>
+<div class="container mt-4">
+    <div class="d-flex align-items-center justify-content-between p-3 text-white rounded mb-4 shadow-sm" style="background-color: #1a5c37;">
+        <div class="d-flex align-items-center">
+            <div class="me-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 50px;">
+                <img src="~/images/LOGOUABC.png" alt="UABC" style="max-height: 100%; max-width: 100%; object-fit: contain;" onerror="this.parentElement.style.display='none'" />
+            </div>
+            <h2 class="m-0 font-weight-bold" style="font-size: 1.6rem; letter-spacing: 0.5px;">Modificar Registro</h2>
+        </div>
+    </div>
 
-<h4>EstudiosIndependientes</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="No" class="control-label"></label>
-                <input asp-for="No" class="form-control" />
-                <span asp-validation-for="No" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="No_Programa_Educativo" class="control-label"></label>
-                <input asp-for="No_Programa_Educativo" class="form-control" />
-                <span asp-validation-for="No_Programa_Educativo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Programa_Educativo" class="control-label"></label>
-                <input asp-for="Programa_Educativo" class="form-control" />
-                <span asp-validation-for="Programa_Educativo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Plan_de_Estudios" class="control-label"></label>
-                <input asp-for="Plan_de_Estudios" class="form-control" />
-                <span asp-validation-for="Plan_de_Estudios" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Matricula" class="control-label"></label>
-                <input asp-for="Matricula" class="form-control" />
-                <span asp-validation-for="Matricula" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nombre_Alumno" class="control-label"></label>
-                <input asp-for="Nombre_Alumno" class="form-control" />
-                <span asp-validation-for="Nombre_Alumno" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Clave_Estudio_Independiente" />
-            <div class="form-group">
-                <label asp-for="Nombre_Estudio_Independiente" class="control-label"></label>
-                <input asp-for="Nombre_Estudio_Independiente" class="form-control" />
-                <span asp-validation-for="Nombre_Estudio_Independiente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Creditos_Estudio_Independiente" class="control-label"></label>
-                <input asp-for="Creditos_Estudio_Independiente" class="form-control" />
-                <span asp-validation-for="Creditos_Estudio_Independiente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="No_Empleado" class="control-label"></label>
-                <input asp-for="No_Empleado" class="form-control" />
-                <span asp-validation-for="No_Empleado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nombre_Profesor_Tutor_Investigar" class="control-label"></label>
-                <input asp-for="Nombre_Profesor_Tutor_Investigar" class="form-control" />
-                <span asp-validation-for="Nombre_Profesor_Tutor_Investigar" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="card shadow-sm border-0 rounded-lg">
+        <div class="card-body p-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <input type="hidden" asp-for="Clave_Estudio_Independiente" />
+
+                <div class="row">
+                    <div class="form-group col-md-4 mb-3">
+                        <label asp-for="No" class="control-label font-weight-bold">Número</label>
+                        <input asp-for="No" class="form-control" />
+                        <span asp-validation-for="No" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4 mb-3">
+                        <label asp-for="No_Programa_Educativo" class="control-label font-weight-bold">No. Programa Educativo</label>
+                        <input asp-for="No_Programa_Educativo" class="form-control" />
+                        <span asp-validation-for="No_Programa_Educativo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4 mb-3">
+                        <label asp-for="Programa_Educativo" class="control-label font-weight-bold">Programa Educativo</label>
+                        <input asp-for="Programa_Educativo" class="form-control" />
+                        <span asp-validation-for="Programa_Educativo" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-4 mb-3">
+                        <label asp-for="Plan_de_Estudios" class="control-label font-weight-bold">Plan de Estudios</label>
+                        <input asp-for="Plan_de_Estudios" class="form-control" />
+                        <span asp-validation-for="Plan_de_Estudios" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4 mb-3">
+                        <label asp-for="Matricula" class="control-label font-weight-bold">Matrícula</label>
+                        <input asp-for="Matricula" class="form-control" />
+                        <span asp-validation-for="Matricula" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4 mb-3">
+                        <label asp-for="Nombre_Alumno" class="control-label font-weight-bold">Nombre del Alumno</label>
+                        <input asp-for="Nombre_Alumno" class="form-control" />
+                        <span asp-validation-for="Nombre_Alumno" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6 mb-3">
+                        <label asp-for="Nombre_Estudio_Independiente" class="control-label font-weight-bold">Nombre del Estudio Independiente</label>
+                        <input asp-for="Nombre_Estudio_Independiente" class="form-control" />
+                        <span asp-validation-for="Nombre_Estudio_Independiente" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 mb-3">
+                        <label asp-for="Creditos_Estudio_Independiente" class="control-label font-weight-bold">Créditos</label>
+                        <input asp-for="Creditos_Estudio_Independiente" class="form-control" />
+                        <span asp-validation-for="Creditos_Estudio_Independiente" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-4 mb-3">
+                        <label asp-for="No_Empleado" class="control-label font-weight-bold">No. Empleado</label>
+                        <input asp-for="No_Empleado" class="form-control" />
+                        <span asp-validation-for="No_Empleado" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-8 mb-4">
+                        <label asp-for="Nombre_Profesor_Tutor_Investigar" class="control-label font-weight-bold">Profesor Tutor / Investigador</label>
+                        <input asp-for="Nombre_Profesor_Tutor_Investigar" class="form-control" />
+                        <span asp-validation-for="Nombre_Profesor_Tutor_Investigar" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 border-top pt-3">
+                    <a asp-action="Index" class="btn btn-secondary px-4 rounded-pill me-2">Regresar</a>
+                    <button type="submit" class="btn text-white px-4 rounded-pill shadow-sm" style="background-color: #1a5c37;">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 }

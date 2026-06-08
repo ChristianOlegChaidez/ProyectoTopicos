@@ -1,81 +1,55 @@
 @model ProyectoTopicos.Models.EstudiosIndependientes
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar Estudio Independiente";
 }
 
-<h1>Delete</h1>
+<div class="container mt-4">
+    <div class="d-flex align-items-center justify-content-between p-3 text-white rounded mb-4 shadow-sm bg-danger">
+        <div class="d-flex align-items-center">
+            <div class="me-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 50px;">
+                <img src="~/images/LOGOUABC.png" alt="UABC" style="max-height: 100%; max-width: 100%; object-fit: contain;" onerror="this.parentElement.style.display='none'" />
+            </div>
+            <h2 class="m-0 font-weight-bold" style="font-size: 1.6rem; letter-spacing: 0.5px;">¿Está seguro de que desea eliminar este registro?</h2>
+        </div>
+    </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>EstudiosIndependientes</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.No)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.No)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.No_Programa_Educativo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.No_Programa_Educativo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Programa_Educativo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Programa_Educativo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Plan_de_Estudios)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Plan_de_Estudios)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Matricula)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Matricula)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre_Alumno)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre_Alumno)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre_Estudio_Independiente)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre_Estudio_Independiente)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Creditos_Estudio_Independiente)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Creditos_Estudio_Independiente)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.No_Empleado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.No_Empleado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre_Profesor_Tutor_Investigar)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre_Profesor_Tutor_Investigar)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Clave_Estudio_Independiente" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    <div class="card shadow-sm border-0 rounded-lg">
+        <div class="card-body p-4">
+            <div class="alert alert-warning d-flex align-items-center" role="alert">
+                <div>
+                    <strong>Atención:</strong> Esta acción es permanente y no se podrá deshacer. Por favor, valide la información del estudiante antes de continuar.
+                </div>
+            </div>
+
+            <table class="table table-bordered m-0 mt-3">
+                <tbody>
+                    <tr>
+                        <th style="width: 30%; background-color: #f8f9fa;">@Html.DisplayNameFor(model => model.Matricula)</th>
+                        <td><strong>@Html.DisplayFor(model => model.Matricula)</strong></td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #f8f9fa;">@Html.DisplayNameFor(model => model.Nombre_Alumno)</th>
+                        <td>@Html.DisplayFor(model => model.Nombre_Alumno)</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #f8f9fa;">@Html.DisplayNameFor(model => model.Nombre_Estudio_Independiente)</th>
+                        <td>@Html.DisplayFor(model => model.Nombre_Estudio_Independiente)</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #f8f9fa;">@Html.DisplayNameFor(model => model.Nombre_Profesor_Tutor_Investigar)</th>
+                        <td>@Html.DisplayFor(model => model.Nombre_Profesor_Tutor_Investigar)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <form asp-action="Delete" class="mt-4">
+                <input type="hidden" asp-for="Clave_Estudio_Independiente" />
+                <div class="d-flex justify-content-end gap-2 border-top pt-3">
+                    <a asp-action="Index" class="btn btn-secondary px-4 rounded-pill me-2">Cancelar</a>
+                    <button type="submit" class="btn btn-danger px-4 rounded-pill shadow-sm">Eliminar Definitivamente</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

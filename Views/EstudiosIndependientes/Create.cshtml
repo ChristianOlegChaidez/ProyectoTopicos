@@ -1,120 +1,121 @@
 @model ProyectoTopicos.Models.EstudiosIndependientes
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Agregar Estudio Independiente";
 }
 
-<h1>Create</h1>
-<h4>EstudiosIndependientes</h4>
-<hr />
-
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <!-- No. Programa Educativo (se llena solo) -->
-            <div class="form-group">
-                <label asp-for="No_Programa_Educativo" class="control-label"></label>
-                <input asp-for="No_Programa_Educativo" class="form-control" id="No_Programa_Educativo"
-                       readonly style="background:#f0f0f0;" placeholder="Se llena al seleccionar materia..." />
-                <span asp-validation-for="No_Programa_Educativo" class="text-danger"></span>
+<div class="container mt-4">
+    <div class="d-flex align-items-center justify-content-between p-3 text-white rounded mb-4 shadow-sm" style="background-color: #1a5c37;">
+        <div class="d-flex align-items-center">
+            <div class="me-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 50px;">
+                <img src="~/images/LOGOUABC.png" alt="UABC" style="max-height: 100%; max-width: 100%; object-fit: contain;" onerror="this.parentElement.style.display='none'" />
             </div>
-
-            <!-- Programa Educativo (se llena solo) -->
-            <div class="form-group">
-                <label asp-for="Programa_Educativo" class="control-label"></label>
-                <input asp-for="Programa_Educativo" class="form-control" id="Programa_Educativo"
-                       readonly style="background:#f0f0f0;" placeholder="Se llena al seleccionar materia..." />
-                <span asp-validation-for="Programa_Educativo" class="text-danger"></span>
-            </div>
-
-            <!-- Plan de Estudios (se llena solo) -->
-            <div class="form-group">
-                <label asp-for="Plan_de_Estudios" class="control-label"></label>
-                <input asp-for="Plan_de_Estudios" class="form-control" id="Plan_de_Estudios"
-                       readonly style="background:#f0f0f0;" placeholder="Se llena al seleccionar materia..." />
-                <span asp-validation-for="Plan_de_Estudios" class="text-danger"></span>
-            </div>
-
-            <!-- Matrícula con Select2 -->
-            <div class="form-group">
-                <label asp-for="Matricula" class="control-label"></label>
-                <select asp-for="Matricula" class="form-control" id="Matricula">
-                    <option value="">-- Selecciona alumno --</option>
-                    @foreach (var a in ViewBag.Alumnos)
-                    {
-                        <option value="@a.Matricula">@a.Matricula - @a.Nombre</option>
-                    }
-                </select>
-                <span asp-validation-for="Matricula" class="text-danger"></span>
-            </div>
-
-            <!-- Nombre Alumno (se llena solo) -->
-            <div class="form-group">
-                <label asp-for="Nombre_Alumno" class="control-label"></label>
-                <input asp-for="Nombre_Alumno" class="form-control" id="Nombre_Alumno"
-                       readonly style="background:#f0f0f0;" placeholder="Se llena automáticamente..." />
-            </div>
-
-            <!-- Materia con Select2 -->
-            <div class="form-group">
-                <label class="control-label">Nombre Estudio Independiente</label>
-                <select class="form-control" id="SelectMateria">
-                    <option value="">-- Selecciona materia --</option>
-                    @foreach (var m in ViewBag.Materias)
-                    {
-                        <option value="@m.ClaveUA"
-                                data-nombre="@m.NombreUA"
-                                data-pe="@m.NombrePE"
-                                data-plan="@m.PlanDeEstudios"
-                                data-creditos="@m.Creditos"
-                                data-nope="@m.NoPE">
-                            @m.NombreUA - @m.NombrePE
-                        </option>
-                    }
-                </select>
-                <input type="hidden" asp-for="Nombre_Estudio_Independiente" id="Nombre_Estudio_Independiente" />
-            </div>
-
-            <!-- Créditos (se llena solo) -->
-            <div class="form-group">
-                <label asp-for="Creditos_Estudio_Independiente" class="control-label"></label>
-                <input asp-for="Creditos_Estudio_Independiente" class="form-control" id="Creditos_Estudio_Independiente"
-                       readonly style="background:#f0f0f0;" placeholder="Se llena al seleccionar materia..." />
-                <span asp-validation-for="Creditos_Estudio_Independiente" class="text-danger"></span>
-            </div>
-
-            <!-- No. Empleado con Select2 -->
-            <div class="form-group">
-                <label asp-for="No_Empleado" class="control-label"></label>
-                <select asp-for="No_Empleado" class="form-control" id="No_Empleado">
-                    <option value="">-- Selecciona maestro --</option>
-                    @foreach (var m in ViewBag.Maestros)
-                    {
-                        <option value="@m.Numero_Empleado">@m.Numero_Empleado - @m.Nombre</option>
-                    }
-                </select>
-                <span asp-validation-for="No_Empleado" class="text-danger"></span>
-            </div>
-
-            <!-- Nombre Profesor (se llena solo) -->
-            <div class="form-group">
-                <label asp-for="Nombre_Profesor_Tutor_Investigar" class="control-label"></label>
-                <input asp-for="Nombre_Profesor_Tutor_Investigar" class="form-control" id="Nombre_Profesor_Tutor_Investigar"
-                       readonly style="background:#f0f0f0;" placeholder="Se llena automáticamente..." />
-            </div>
-
-            <div class="form-group mt-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-            </div>
-        </form>
+            <h2 class="m-0 font-weight-bold" style="font-size: 1.6rem; letter-spacing: 0.5px;">Registrar Estudio Independiente</h2>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div class="card shadow-sm border-0 rounded-lg">
+        <div class="card-body p-4 bg-light rounded-lg">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <h5 class="text-secondary border-bottom pb-2 mb-3"><i class="bi bi-person-fill"></i> Información del Alumno</h5>
+                <div class="row mb-4">
+                    <div class="form-group col-md-4">
+                        <label asp-for="Matricula" class="control-label font-weight-bold mb-1">Matrícula o Nombre</label>
+                        <select asp-for="Matricula" class="form-control" id="Matricula">
+                            <option value="">-- Selecciona alumno --</option>
+                            @foreach (var a in ViewBag.Alumnos)
+                            {
+                                <option value="@a.Matricula">@a.Matricula - @a.Nombre</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Matricula" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label asp-for="Nombre_Alumno" class="control-label font-weight-bold mb-1">Nombre Completo del Alumno</label>
+                        <input asp-for="Nombre_Alumno" class="form-control bg-white" id="Nombre_Alumno"
+                               readonly style="border-style: dashed;" placeholder="Se llenará automáticamente al seleccionar..." />
+                    </div>
+                </div>
+
+                <h5 class="text-secondary border-bottom pb-2 mb-3"><i class="bi bi-book-fill"></i> Datos del Estudio Independiente</h5>
+                <div class="row mb-4">
+                    <div class="form-group col-md-6 mb-3">
+                        <label class="control-label font-weight-bold mb-1">Buscar Materia / Unidad de Aprendizaje</label>
+                        <select class="form-control" id="SelectMateria">
+                            <option value="">-- Selecciona materia --</option>
+                            @foreach (var m in ViewBag.Materias)
+                            {
+                                <option value="@m.ClaveUA"
+                                        data-nombre="@m.NombreUA"
+                                        data-pe="@m.NombrePE"
+                                        data-plan="@m.PlanDeEstudios"
+                                        data-creditos="@m.Creditos"
+                                        data-nope="@m.NoPE">
+                                    @m.NombreUA - @m.NombrePE
+                                </option>
+                            }
+                        </select>
+                        <input type="hidden" asp-for="Nombre_Estudio_Independiente" id="Nombre_Estudio_Independiente" />
+                    </div>
+                    <div class="form-group col-md-3 mb-3">
+                        <label asp-for="Creditos_Estudio_Independiente" class="control-label font-weight-bold mb-1">Créditos UA</label>
+                        <input asp-for="Creditos_Estudio_Independiente" class="form-control text-center font-weight-bold" id="Creditos_Estudio_Independiente"
+                               readonly style="background:#e9ecef;" placeholder="-" />
+                        <span asp-validation-for="Creditos_Estudio_Independiente" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-3 mb-3">
+                        <label asp-for="No_Programa_Educativo" class="control-label font-weight-bold mb-1">No. Prog. Educativo</label>
+                        <input asp-for="No_Programa_Educativo" class="form-control text-center" id="No_Programa_Educativo"
+                               readonly style="background:#e9ecef;" placeholder="-" />
+                        <span asp-validation-for="No_Programa_Educativo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Programa_Educativo" class="control-label font-weight-bold mb-1">Programa Educativo</label>
+                        <input asp-for="Programa_Educativo" class="form-control" id="Programa_Educativo"
+                               readonly style="background:#e9ecef;" placeholder="Programa educativo vinculado..." />
+                        <span asp-validation-for="Programa_Educativo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Plan_de_Estudios" class="control-label font-weight-bold mb-1">Plan de Estudios</label>
+                        <input asp-for="Plan_de_Estudios" class="form-control" id="Plan_de_Estudios"
+                               readonly style="background:#e9ecef;" placeholder="Año del plan..." />
+                        <span asp-validation-for="Plan_de_Estudios" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <input type="hidden" asp-for="No" value="1" />
+
+                <h5 class="text-secondary border-bottom pb-2 mb-3"><i class="bi bi-person-badge-fill"></i> Asignación de Profesor Tutor</h5>
+                <div class="row mb-4">
+                    <div class="form-group col-md-4">
+                        <label asp-for="No_Empleado" class="control-label font-weight-bold mb-1">No. Empleado o Nombre</label>
+                        <select asp-for="No_Empleado" class="form-control" id="No_Empleado">
+                            <option value="">-- Selecciona maestro --</option>
+                            @foreach (var m in ViewBag.Maestros)
+                            {
+                                <option value="@m.Numero_Empleado">@m.Numero_Empleado - @m.Nombre</option>
+                            }
+                        </select>
+                        <span asp-validation-for="No_Empleado" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label asp-for="Nombre_Profesor_Tutor_Investigar" class="control-label font-weight-bold mb-1">Nombre del Profesor Tutor</label>
+                        <input asp-for="Nombre_Profesor_Tutor_Investigar" class="form-control bg-white" id="Nombre_Profesor_Tutor_Investigar"
+                               readonly style="border-style: dashed;" placeholder="Se llenará automáticamente al seleccionar..." />
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 border-top pt-3 mt-4">
+                    <a asp-action="Index" class="btn btn-light border px-4 rounded-pill me-2">Cancelar y Regresar</a>
+                    <button type="submit" class="btn text-white px-5 rounded-pill font-weight-bold shadow-sm" style="background-color: #1a5c37;">
+                        <i class="bi bi-check-circle-fill"></i> Guardar Registro
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
@@ -128,28 +129,26 @@
     <script>
         $(document).ready(function () {
 
-        // Select2 en Matrícula
+        // Inicializar Select2 con el estilo estandarizado
         $('#Matricula').select2({
         placeholder: "Busca por matrícula o nombre...",
         allowClear: true,
         width: '100%'
         });
 
-        // Select2 en No. Empleado
         $('#No_Empleado').select2({
-        placeholder: "Busca por no. empleado o nombre...",
+        placeholder: "Busca por número de empleado o nombre...",
         allowClear: true,
         width: '100%'
         });
 
-        // Select2 en Materia
         $('#SelectMateria').select2({
-        placeholder: "Busca materia...",
+        placeholder: "Escribe para buscar la materia...",
         allowClear: true,
         width: '100%'
         });
 
-        // Al seleccionar alumno → llena nombre
+        // Lógica para recuperar y segmentar nombres
         $('#Matricula').on('change', function () {
         var texto = $(this).find('option:selected').text();
         if (texto && texto !== '-- Selecciona alumno --') {
@@ -160,7 +159,6 @@
         }
         });
 
-        // Al seleccionar maestro → llena nombre
         $('#No_Empleado').on('change', function () {
         var texto = $(this).find('option:selected').text();
         if (texto && texto !== '-- Selecciona maestro --') {
@@ -171,7 +169,6 @@
         }
         });
 
-        // Al seleccionar materia → llena todos los campos relacionados
         $('#SelectMateria').on('change', function () {
         var op = $(this).find('option:selected');
         if (op.val()) {
@@ -188,7 +185,6 @@
         $('#No_Programa_Educativo').val('');
         }
         });
-
         });
     </script>
 }
