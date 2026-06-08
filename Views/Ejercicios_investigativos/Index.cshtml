@@ -1,0 +1,160 @@
+﻿@model IEnumerable<ProyectoTopicos.Models.Ejercicios_investigativos>
+
+@{
+    ViewData["Title"] = "Ejercicios Investigativos";
+}
+
+<style>
+    nav {
+        display: none;
+    }
+
+    .uabc-header {
+        background-color: #1b5e3f;
+        color: white;
+        padding: 20px 30px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin-bottom: 30px;
+        border-radius: 8px;
+    }
+
+    .logo-uabc-header {
+        height: 80px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .uabc-header h1 {
+        font-size: 2rem;
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .btn-uabc {
+        background-color: #1b5e3f;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        border-radius: 6px;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        transition: 0.3s;
+    }
+
+        .btn-uabc:hover {
+            background-color: #0d3a23;
+            color: white;
+        }
+
+    .search-box {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+    }
+
+    .tabla-container {
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: white;
+        overflow-x: auto;
+    }
+
+    .table th {
+        background-color: #f8f9fa;
+        font-weight: 700;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .btn-sm-action {
+        padding: 6px 12px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: inline-block;
+        margin: 2px;
+    }
+
+    .btn-edit {
+        background-color: #f0c040;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .btn-delete {
+        background-color: #e74c3c;
+        color: white;
+    }
+</style>
+
+<div class="uabc-header">
+    <img src="~/images/logo-uabc.png" alt="Logo UABC" class="logo-uabc-header">
+    <h1>Ejercicios Investigativos</h1>
+</div>
+
+<div class="row mb-4 align-items-center">
+    <div class="col-md-3">
+        <a asp-action="Create" class="btn-uabc w-100">+ Agregar Ejercicio</a>
+    </div>
+    <div class="col-md-9">
+        <input class="search-box" id="buscador" type="text" placeholder=" Buscar por clave, matrícula o nombre..." onkeyup="filtrar()" />
+    </div>
+</div>
+
+<div class="tabla-container">
+    <table class="table table-hover align-middle mb-0">
+        <thead>
+            <tr>
+                <th>No. Prog.</th>
+                <th>Programa Educativo</th>
+                <th>Matrícula</th>
+                <th>Nombre Alumno</th>
+                <th>Clave</th>
+                <th>Nombre Ejercicio</th>
+                <th>Créditos</th>
+                <th>Profesor / Tutor</th>
+                <th>Grupo</th>
+                <th>Cap.</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tablaBody">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.No_de_programa_educativo</td>
+                    <td>@item.Programa_educativo</td>
+                    <td><span class="badge bg-warning text-dark" style="font-size: 0.9rem;">@item.Matricula</span></td>
+                    <td>@item.Nombre_del_alumno</td>
+                    <td>@item.Clave_del_ejercicio_investigativo</td>
+                    <td>@item.Nombre_del_ejercicio_investigativo</td>
+                    <td>@item.Creditos_del_ejercicio_investigativo</td>
+                    <td>@item.Nombre_del_profesor_tutor_o_investigador</td>
+                    <td>@item.Grupo</td>
+                    <td>@item.Capturado</td>
+                    <td class="text-center" style="min-width: 160px;">
+                        <a asp-action="Edit" asp-route-id="@item.No_de_programa_educativo" class="btn-sm-action btn-edit">Modificar</a>
+                        <a asp-action="Delete" asp-route-id="@item.No_de_programa_educativo" class="btn-sm-action btn-delete">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function filtrar() {
+        var input = document.getElementById("buscador").value.toLowerCase();
+        var filas = document.getElementById("tablaBody").getElementsByTagName("tr");
+        for (var i = 0; i < filas.length; i++) {
+            var texto = filas[i].innerText.toLowerCase();
+            filas[i].style.display = texto.includes(input) ? "" : "none";
+        }
+    }
+</script>

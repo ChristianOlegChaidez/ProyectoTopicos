@@ -8,6 +8,9 @@ public class ProyectoTopicosContext(DbContextOptions<ProyectoTopicosContext> opt
     public DbSet<ProyectoTopicos.Models.Materia> Materias { get; set; } = default!;
     public DbSet<ProyectoTopicos.Models.Ayudantias_Investigacion> Ayudantias { get; set; } = default!;
 
+    // Tu código agregado
+    public DbSet<ProyectoTopicos.Models.Ejercicios_investigativos> Ejercicios_investigativos { get; set; } = default!;
+
     // Del suyo
     public DbSet<ProyectoTopicos.Models.Ayudantias_Laboratorio> Ayudantias_Laboratorio { get; set; } = default!;
 
@@ -22,6 +25,9 @@ public class ProyectoTopicosContext(DbContextOptions<ProyectoTopicosContext> opt
         modelBuilder.Entity<ProyectoTopicos.Models.Maestro>().ToTable("Tabla_Maestros").HasKey(m => m.Numero_Empleado);
         modelBuilder.Entity<ProyectoTopicos.Models.Materia>().ToTable("Tabla_Materias").HasKey(m => m.ClaveUA);
         modelBuilder.Entity<ProyectoTopicos.Models.Ayudantias_Investigacion>().ToTable("Ayudantias").HasKey(a => a.Clave_Ayudantias);
+
+        // Tu código agregado
+        modelBuilder.Entity<ProyectoTopicos.Models.Ejercicios_investigativos>().ToTable("Ejercicios_investigativos").HasKey(e => e.No_de_programa_educativo);
 
         // Del suyo
         modelBuilder.Entity<ProyectoTopicos.Models.Ayudantias_Laboratorio>().ToTable("Ayudantias_Laboratorio").HasKey(a => a.id);
