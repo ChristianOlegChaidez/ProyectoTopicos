@@ -1,0 +1,153 @@
+@model IEnumerable<ProyectoTopicos.Models.Ayudantias_Laboratorio>
+
+@{
+    ViewData["Title"] = "Ayudantías de Laboratorio";
+}
+
+<style>
+    header {
+        display: none;
+    }
+
+    .header-bar {
+        background: #1a5c2e;
+        color: white;
+        padding: 1.2rem 2rem;
+        border-radius: 8px 8px 0 0;
+        font-size: 22px;
+        font-weight: 500;
+    }
+
+    .btn-verde {
+        background: #1a5c2e;
+        color: white;
+        border: none;
+        padding: 12px 0;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        flex: 1;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+    }
+
+        .btn-verde:hover {
+            background: #0f3d1e;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-verde:disabled {
+            background: #888;
+            cursor: not-allowed;
+        }
+
+    .tabla-wrap {
+        border: 1.5px solid #bbb;
+        border-radius: 6px;
+        overflow-x: auto;
+        background: #f5f5f5;
+        min-height: 180px;
+    }
+
+    .tabla-lab {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+        .tabla-lab thead tr {
+            background: #e8e8e8;
+        }
+
+        .tabla-lab th {
+            padding: 8px 12px;
+            text-align: left;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .tabla-lab td {
+            padding: 8px 12px;
+            border-top: 0.5px solid #ddd;
+            cursor: pointer;
+        }
+
+        .tabla-lab tr.seleccionada td {
+            background: #c8e6c9;
+        }
+</style>
+
+<div style="border: 1.5px solid #bbb; border-radius: 10px; overflow: hidden;">
+
+    <div class="header-bar" style="display: flex; align-items: center; gap: 20px;">
+        <img src="~/images/logo-uabc.png" alt="Logo UABC" style="height: 60px;" />
+        <span>Ayudantías de Laboratorio</span>
+    </div>
+
+    <div style="background: white; padding: 1.2rem 1.5rem; display: flex; gap: 12px;">
+        <a asp-action="Create" class="btn-verde">Agregar</a>
+        <button id="btnEliminar" class="btn-verde" disabled onclick="irA('Delete')">Eliminar</button>
+        <button id="btnModificar" class="btn-verde" disabled onclick="irA('Edit')">Modificar</button>
+    </div>
+
+    <div style="padding: 1rem 1.5rem 1.5rem; background: white;">
+        <div class="tabla-wrap">
+            <table class="tabla-lab" id="tablaLab">
+                <thead>
+                    <tr>
+                        <th>No. Programa</th>
+                        <th>Programa Educativo</th>
+                        <th>Plan de Estudios</th>
+                        <th>Matrícula</th>
+                        <th>Nombre Alumno</th>
+                        <th>Clave Ayudantía</th>
+                        <th>Nombre Ayudantía</th>
+                        <th>Créditos</th>
+                        <th>Nombre Empleado</th>
+                        <th>Nombre Profesor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr data-id="@item.id">
+                            <td>@item.no_programa</td>
+                            <td>@item.programa_educativo</td>
+                            <td>@item.plan_de_estudios</td>
+                            <td>@item.Matricula</td>
+                            <td>@item.Nombre_alumno</td>
+                            <td>@item.clave_ayudantia</td>
+                            <td>@item.nombre_ayudantia_lab</td>
+                            <td>@item.creditos_ayudantia</td>
+                            <td>@item.nombre_empleado</td>
+                            <td>@item.nombre_profesor</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    let idSeleccionado = null;
+
+    document.querySelectorAll('#tablaLab tbody tr').forEach(fila => {
+        fila.addEventListener('click', function () {
+            document.querySelectorAll('#tablaLab tbody tr').forEach(f => f.classList.remove('seleccionada'));
+            this.classList.add('seleccionada');
+            idSeleccionado = this.getAttribute('data-id');
+            document.getElementById('btnEliminar').disabled = false;
+            document.getElementById('btnModificar').disabled = false;
+        });
+    });
+
+    function irA(accion) {
+        if (idSeleccionado) {
+            window.location.href = '/Ayudantias_Laboratorio/' + accion + '/' + idSeleccionado;
+        }
+    }
+</script>

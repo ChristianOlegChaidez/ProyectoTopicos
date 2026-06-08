@@ -1,0 +1,126 @@
+@model ProyectoTopicos.Models.Ayudantias_Laboratorio
+
+@{
+    ViewData["Title"] = "Modificar";
+}
+
+<style>
+    header {
+        display: none;
+    }
+
+    .header-bar {
+        background: #1a5c2e;
+        color: white;
+        padding: 1.2rem 2rem;
+        border-radius: 8px 8px 0 0;
+        font-size: 22px;
+        font-weight: 500;
+    }
+
+    .btn-verde {
+        background: #1a5c2e;
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        .btn-verde:hover {
+            background: #0f3d1e;
+            color: white;
+        }
+
+    .btn-cancelar {
+        background: #888;
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .btn-cancelar:hover {
+            background: #555;
+            color: white;
+        }
+</style>
+
+<div style="border: 1.5px solid #bbb; border-radius: 10px; overflow: hidden; max-width: 700px; margin: auto;">
+    <div class="header-bar" style="display: flex; align-items: center; gap: 20px;">
+        <img src="~/images/logo-uabc.png" alt="Logo UABC" style="height: 60px;" />
+        <span>Modificar Registro</span>
+    </div>
+    <div style="padding: 1.5rem; background: white;">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id" />
+
+            <div class="mb-3">
+                <label asp-for="no_programa" class="form-label"></label>
+                <input asp-for="no_programa" class="form-control" />
+                <span asp-validation-for="no_programa" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="programa_educativo" class="form-label"></label>
+                <input asp-for="programa_educativo" class="form-control" />
+                <span asp-validation-for="programa_educativo" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="plan_de_estudios" class="form-label"></label>
+                <input asp-for="plan_de_estudios" class="form-control" />
+                <span asp-validation-for="plan_de_estudios" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Matricula" class="form-label"></label>
+                <input asp-for="Matricula" class="form-control" />
+                <span asp-validation-for="Matricula" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Nombre_alumno" class="form-label"></label>
+                <input asp-for="Nombre_alumno" class="form-control" />
+                <span asp-validation-for="Nombre_alumno" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="clave_ayudantia" class="form-label"></label>
+                <input asp-for="clave_ayudantia" class="form-control" />
+                <span asp-validation-for="clave_ayudantia" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="nombre_ayudantia_lab" class="form-label"></label>
+                <input asp-for="nombre_ayudantia_lab" class="form-control" />
+                <span asp-validation-for="nombre_ayudantia_lab" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="creditos_ayudantia" class="form-label"></label>
+                <input asp-for="creditos_ayudantia" class="form-control" />
+                <span asp-validation-for="creditos_ayudantia" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="nombre_empleado" class="form-label"></label>
+                <input asp-for="nombre_empleado" class="form-control" />
+                <span asp-validation-for="nombre_empleado" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="nombre_profesor" class="form-label"></label>
+                <input asp-for="nombre_profesor" class="form-control" />
+                <span asp-validation-for="nombre_profesor" class="text-danger"></span>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 1.5rem;">
+                <button type="submit" class="btn-verde">Guardar</button>
+                <a asp-action="Index" class="btn-cancelar">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

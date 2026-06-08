@@ -2,7 +2,9 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ProyectoTopicosContext") ?? throw new InvalidOperationException("Connection string 'ProyectoTopicosContext' not found.");
 
-builder.Services.AddDbContext<ProyectoTopicosContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddDbContext<ProyectoTopicosContext>(options =>
+    options.UseSqlite(connectionString)
+           .ConfigureWarnings(w => w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning)));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -33,5 +35,6 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<ProyectoTopicosContext>();
     db.Database.EnsureCreated();
 }
+
 
 app.Run();

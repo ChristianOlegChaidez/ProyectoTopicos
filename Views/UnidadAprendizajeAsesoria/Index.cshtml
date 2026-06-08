@@ -1,0 +1,135 @@
+﻿@model IEnumerable<ProyectoTopicos.Models.UnidadAprendizajeAsesoria>
+
+@{
+    ViewData["Title"] = "Asesorías";
+}
+
+<style>
+       header {
+        display: none;
+    }
+
+    .header-bar {
+        background: #1a5c2e;
+        color: white;
+        padding: 1.2rem 2rem;
+        border-radius: 8px 8px 0 0;
+        font-size: 22px;
+        font-weight: 500;
+    }
+    .btn-verde {
+        background: #1a5c2e;
+        color: white;
+        border: none;
+        padding: 12px 0;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        flex: 1;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+    }
+    .btn-verde:hover { background: #0f3d1e; color: white; text-decoration: none; }
+    .btn-verde:disabled { background: #888; cursor: not-allowed; }
+    .tabla-wrap {
+        border: 1.5px solid #bbb;
+        border-radius: 6px;
+        overflow-x: auto;
+        background: #f5f5f5;
+        min-height: 180px;
+    }
+    .tabla-asesoria {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+    .tabla-asesoria thead tr { background: #e8e8e8; }
+    .tabla-asesoria th {
+        padding: 8px 12px;
+        text-align: left;
+        font-weight: 500;
+        color: #555;
+    }
+    .tabla-asesoria td {
+        padding: 8px 12px;
+        border-top: 0.5px solid #ddd;
+        cursor: pointer;
+    }
+    .tabla-asesoria tr.seleccionada td { background: #c8e6c9; }
+</style>
+
+<div style="border: 1.5px solid #bbb; border-radius: 10px; overflow: hidden;">
+
+    <div class="header-bar" style="display: flex; align-items: center; gap: 20px;">
+    <img src="~/images/logo-uabc.png" alt="Logo UABC" style="height: 60px;" />
+    <span>Unidades de Aprendizaje por Asesoría</span>
+</div>
+
+    <div style="background: white; padding: 1.2rem 1.5rem; display: flex; gap: 12px;">
+        <a asp-action="Create" class="btn-verde">Agregar</a>
+        <button id="btnEliminar" class="btn-verde" disabled onclick="irA('Delete')">Eliminar</button>
+        <button id="btnModificar" class="btn-verde" disabled onclick="irA('Edit')">Modificar</button>
+    </div>
+
+    <div style="padding: 1rem 1.5rem 1.5rem; background: white;">
+        <div class="tabla-wrap">
+            <table class="tabla-asesoria" id="tablaAsesoria">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.No)</th>
+                        <th>@Html.DisplayNameFor(model => model.Programa_Educativo)</th>
+                        <th>@Html.DisplayNameFor(model => model.Plan_de_estudios)</th>
+                        <th>@Html.DisplayNameFor(model => model.Matricula_del_Alumno)</th>
+                        <th>@Html.DisplayNameFor(model => model.Nombre_del_Alumno)</th>
+                        <th>@Html.DisplayNameFor(model => model.Clave_de_la_materia)</th>
+                        <th>@Html.DisplayNameFor(model => model.Nombre_de_la_Unidad_de_Aprendizaje_por_asesoria_Academica)</th>
+                        <th>@Html.DisplayNameFor(model => model.Creditos_de_la_Unidad_de_Aprendizaje)</th>
+                        <th>@Html.DisplayNameFor(model => model.Nombre_del_profesor)</th>
+                        <th>@Html.DisplayNameFor(model => model.Grupo)</th>
+                        <th>@Html.DisplayNameFor(model => model.CAPTURADO)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr data-id="@item.No">
+                            <td>@Html.DisplayFor(model => item.No)</td>
+                            <td>@Html.DisplayFor(model => item.Programa_Educativo)</td>
+                            <td>@Html.DisplayFor(model => item.Plan_de_estudios)</td>
+                            <td>@Html.DisplayFor(model => item.Matricula_del_Alumno)</td>
+                            <td>@Html.DisplayFor(model => item.Nombre_del_Alumno)</td>
+                            <td>@Html.DisplayFor(model => item.Clave_de_la_materia)</td>
+                            <td>@Html.DisplayFor(model => item.Nombre_de_la_Unidad_de_Aprendizaje_por_asesoria_Academica)</td>
+                            <td>@Html.DisplayFor(model => item.Creditos_de_la_Unidad_de_Aprendizaje)</td>
+                            <td>@Html.DisplayFor(model => item.Nombre_del_profesor)</td>
+                            <td>@Html.DisplayFor(model => item.Grupo)</td>
+                            <td>@(item.CAPTURADO == true ? "Sí" : "No")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    let idSeleccionado = null;
+
+    document.querySelectorAll('#tablaAsesoria tbody tr').forEach(fila => {
+        fila.addEventListener('click', function () {
+            document.querySelectorAll('#tablaAsesoria tbody tr').forEach(f => f.classList.remove('seleccionada'));
+            this.classList.add('seleccionada');
+            idSeleccionado = this.getAttribute('data-id');
+            document.getElementById('btnEliminar').disabled = false;
+            document.getElementById('btnModificar').disabled = false;
+        });
+    });
+
+    function irA(accion) {
+        if (idSeleccionado) {
+            window.location.href = '/UnidadAprendizajeAsesoria/' + accion + '/' + idSeleccionado;
+        }
+    }
+</script>

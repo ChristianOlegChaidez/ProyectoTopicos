@@ -1,0 +1,197 @@
+@model IEnumerable<ProyectoTopicos.Models.EstudiosIndependientes>
+
+@{
+    ViewData["Title"] = "Estudios Independientes";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estudios Independientes - UABC</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: 'Segoe UI', sans-serif; background: #f0f0f0; }
+
+            .header {
+                background: #1b5e3f;
+                padding: 18px 30px;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+            .header-logo {
+                background: #f5c518;
+                border-radius: 8px;
+                padding: 6px 12px;
+                font-size: 22px;
+                font-weight: 900;
+                color: #1a5c2e;
+                letter-spacing: 1px;
+            }
+            .header-title {
+                color: white;
+                font-size: 26px;
+                font-weight: 600;
+            }
+
+            .btn-bar {
+                display: flex;
+                gap: 16px;
+                padding: 20px 30px;
+                background: white;
+                border-bottom: 2px solid #ddd;
+            }
+            .btn-accion {
+                background: #1a5c2e;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 12px 40px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                text-decoration: none;
+                transition: background 0.2s;
+            }
+            .btn-accion:hover { background: #144a24; color: white; }
+            .btn-accion.eliminar { background: #1a5c2e; }
+            .btn-accion.modificar { background: #1a5c2e; }
+
+            .tabla-contenedor {
+                margin: 20px 30px;
+                background: white;
+                border-radius: 10px;
+                border: 1px solid #ccc;
+                overflow: hidden;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 13px;
+            }
+            thead tr {
+                background: #1a5c2e;
+                color: white;
+            }
+            thead th {
+                padding: 10px 12px;
+                text-align: left;
+                font-weight: 600;
+            }
+            tbody tr:nth-child(even) { background: #f5f5f5; }
+            tbody tr:hover { background: #e8f5e9; }
+            tbody td {
+                padding: 8px 12px;
+                border-bottom: 1px solid #eee;
+                color: #333;
+            }
+            .td-acciones { display: flex; gap: 6px; }
+            .btn-sm-edit {
+                background: #f5c518;
+                color: #333;
+                border: none;
+                border-radius: 4px;
+                padding: 3px 10px;
+                font-size: 12px;
+                cursor: pointer;
+                text-decoration: none;
+            }
+            .btn-sm-del {
+                background: #c0392b;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                padding: 3px 10px;
+                font-size: 12px;
+                cursor: pointer;
+                text-decoration: none;
+            }
+            .btn-sm-det {
+                background: #2980b9;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                padding: 3px 10px;
+                font-size: 12px;
+                cursor: pointer;
+                text-decoration: none;
+            }
+            .empty-msg {
+                text-align: center;
+                padding: 40px;
+                color: #888;
+                font-size: 15px;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <img src="~/images/LOGOUABC.png" alt="UABC" style="height:60px;" />
+        <div class="header-title">Estudios Independientes</div>
+    </div>
+
+    <!-- Botones -->
+    <div class="btn-bar">
+        <a asp-action="Create" class="btn-accion">Agregar</a>
+    </div>
+
+    <!-- Tabla -->
+    <div class="tabla-contenedor">
+        @if (!Model.Any())
+        {
+            <div class="empty-msg">No hay registros de estudios independientes.</div>
+        }
+        else
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>Clave</th>
+                        <th>No. PE</th>
+                        <th>Programa Educativo</th>
+                        <th>Plan Estudios</th>
+                        <th>Matrícula</th>
+                        <th>Nombre Alumno</th>
+                        <th>Nombre Estudio</th>
+                        <th>Créditos</th>
+                        <th>No. Empleado</th>
+                        <th>Profesor/Tutor</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Clave_Estudio_Independiente</td>
+                            <td>@item.No_Programa_Educativo</td>
+                            <td>@item.Programa_Educativo</td>
+                            <td>@item.Plan_de_Estudios</td>
+                            <td>@item.Matricula</td>
+                            <td>@item.Nombre_Alumno</td>
+                            <td>@item.Nombre_Estudio_Independiente</td>
+                            <td>@item.Creditos_Estudio_Independiente</td>
+                            <td>@item.No_Empleado</td>
+                            <td>@item.Nombre_Profesor_Tutor_Investigar</td>
+                            <td>
+                                <div class="td-acciones">
+                                    <a asp-action="Edit" asp-route-id="@item.Clave_Estudio_Independiente" class="btn-sm-edit">Editar</a>
+                                    <a asp-action="Details" asp-route-id="@item.Clave_Estudio_Independiente" class="btn-sm-det">Ver</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Clave_Estudio_Independiente" class="btn-sm-del">Eliminar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+
+</body>
+</html>
