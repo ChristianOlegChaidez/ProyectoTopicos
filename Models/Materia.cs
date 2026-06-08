@@ -10,6 +10,6 @@ namespace ProyectoTopicos.Models
         public string? NombrePE { get; set; }
         public string? PlanDeEstudios { get; set; }
         public string? NombreUA { get; set; }
-        public double Creditos { get; set; }
+        public double? Creditos { get; set; }
     }
 }

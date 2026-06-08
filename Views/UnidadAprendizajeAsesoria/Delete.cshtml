@@ -1,0 +1,70 @@
+﻿@model ProyectoTopicos.Models.UnidadAprendizajeAsesoria
+
+@{
+    ViewData["Title"] = "Eliminar";
+}
+
+<style>
+    .header-bar {
+    background: #1a5c2e;
+    color: white;
+    padding: 1.2rem 2rem;
+    border-radius: 8px 8px 0 0;
+    font-size: 22px;
+    font-weight: 500;
+}
+.btn-eliminar {
+    background: #1a5c2e;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.btn-eliminar:hover { background: #0f3d1e; color: white; }
+    .btn-cancelar {
+        background: #888;
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 6px;
+        font-size: 16px;
+        text-decoration: none;
+    }
+    .btn-cancelar:hover { background: #555; color: white; }
+</style>
+
+<div style="border: 1.5px solid #bbb; border-radius: 10px; overflow: hidden; max-width: 700px; margin: auto;">
+    <div class="header-bar" style="display: flex; align-items: center; gap: 20px;">
+    <img src="~/images/logo-uabc.png" alt="Logo UABC" style="height: 60px;" />
+    <span>Eliminar Registro</span>
+</div>
+    <div style="padding: 1.5rem; background: white;">
+
+        <p style="font-size: 16px; color: #333;">¿Estás seguro que deseas eliminar este registro?</p>
+
+        <table class="table" style="font-size: 14px;">
+            <tr><th>No</th><td>@Model.No</td></tr>
+            <tr><th>Programa Educativo</th><td>@Model.Programa_Educativo</td></tr>
+            <tr><th>Plan de Estudios</th><td>@Model.Plan_de_estudios</td></tr>
+            <tr><th>Matrícula del Alumno</th><td>@Model.Matricula_del_Alumno</td></tr>
+            <tr><th>Nombre del Alumno</th><td>@Model.Nombre_del_Alumno</td></tr>
+            <tr><th>Clave de la Materia</th><td>@Model.Clave_de_la_materia</td></tr>
+            <tr><th>Unidad de Aprendizaje</th><td>@Model.Nombre_de_la_Unidad_de_Aprendizaje_por_asesoria_Academica</td></tr>
+            <tr><th>Créditos</th><td>@Model.Creditos_de_la_Unidad_de_Aprendizaje</td></tr>
+            <tr><th>No de Empleado</th><td>@Model.No_de_empleado</td></tr>
+            <tr><th>Nombre del Profesor</th><td>@Model.Nombre_del_profesor</td></tr>
+            <tr><th>Grupo</th><td>@Model.Grupo</td></tr>
+            <tr><th>Capturado</th><td>@Model.CAPTURADO</td></tr>
+        </table>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="No" />
+            <div style="display: flex; gap: 12px; margin-top: 1rem;">
+                <button type="submit" class="btn-eliminar">Eliminar</button>
+                <a asp-action="Index" class="btn-cancelar">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
