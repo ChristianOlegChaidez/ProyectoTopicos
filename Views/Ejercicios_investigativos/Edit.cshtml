@@ -1,0 +1,383 @@
+﻿@model ProyectoTopicos.Models.Ejercicios_investigativos
+
+@{
+    ViewData["Title"] = "Modificar Ejercicio Investigativo";
+}
+
+<style>
+    nav {
+        display: none;
+    }
+
+    .uabc-header {
+        background-color: #1b5e3f;
+        color: white;
+        padding: 20px 30px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin-bottom: 30px;
+        border-radius: 8px;
+    }
+
+    .logo-uabc-header {
+        height: 80px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .uabc-header h1 {
+        font-size: 2rem;
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .card-form {
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        padding: 30px;
+        background-color: #fafafa;
+    }
+
+    .seccion-titulo {
+        color: #1b5e3f;
+        font-weight: 700;
+        border-bottom: 2px solid #1b5e3f;
+        padding-bottom: 8px;
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #444;
+    }
+
+    .btn-uabc {
+        background-color: #1b5e3f;
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        font-size: 1.1rem;
+        border-radius: 6px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-uabc:hover {
+            background-color: #0d3a23;
+            color: white;
+        }
+
+    /* Estilos del Autocompletado */
+    .autocomplete-wrapper {
+        position: relative;
+    }
+
+    .autocomplete-list {
+        position: absolute;
+        z-index: 999;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        display: none;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+        .autocomplete-list div {
+            padding: 10px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+            .autocomplete-list div:hover {
+                background-color: #f0f0f0;
+            }
+
+    .form-control.is-invalid {
+        border-color: #dc3545;
+    }
+
+    .invalid-feedback {
+        display: block;
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    .form-control.is-valid {
+        border-color: #28a745;
+    }
+
+    .alert-validacion {
+        display: none;
+        margin-bottom: 20px;
+    }
+
+        .alert-validacion.show {
+            display: block;
+        }
+</style>
+
+<div class="uabc-header">
+    <img src="~/images/logo-uabc.png" alt="Logo UABC" class="logo-uabc-header">
+    <h1>Modificar Ejercicio Investigativo</h1>
+</div>
+
+<div asp-validation-summary="ModelOnly" class="alert alert-warning fw-bold mb-3"></div>
+
+<div class="alert alert-danger alert-validacion" id="alertaValidacion" role="alert">
+    <strong>⚠️ Se encontraron los siguientes errores:</strong>
+    <ul id="listaErrores" style="margin-top: 10px; margin-bottom: 0;"></ul>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card-form">
+            <form id="formEjercicio" asp-action="Edit" novalidate>
+                <input type="hidden" asp-for="No_de_programa_educativo" />
+
+                <h5 class="seccion-titulo">Datos del Alumno</h5>
+                <div class="form-group autocomplete-wrapper mb-3">
+                    <label class="form-label">Buscar Alumno <span class="text-danger">*</span></label>
+                    <input id="buscarAlumno" class="form-control form-control-lg" value="@Model.Matricula - @Model.Nombre_del_alumno" autocomplete="off" placeholder="Escribe matrícula o nombre..." />
+                    <div class="autocomplete-list" id="listaAlumnos"></div>
+                    <div class="invalid-feedback">Debe seleccionar un alumno de la lista.</div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <label class="form-label">Matrícula</label>
+                        <input class="form-control" id="MatriculaVisible" value="@Model.Matricula" readonly style="background-color: #fff3cd; font-weight: bold;" />
+                        <input asp-for="Matricula" type="hidden" id="Matricula" />
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label">Nombre del Alumno</label>
+                        <input asp-for="Nombre_del_alumno" class="form-control" id="Nombre_del_alumno" readonly style="background-color: #e2e3e5;" />
+                    </div>
+                </div>
+
+                <h5 class="seccion-titulo mt-5">Datos del Ejercicio Investigativo</h5>
+                <div class="form-group autocomplete-wrapper mb-3">
+                    <label class="form-label">Buscar Ejercicio <span class="text-danger">*</span></label>
+                    <input id="buscarMateria" class="form-control form-control-lg" value="@Model.Nombre_del_ejercicio_investigativo - @Model.Programa_educativo" autocomplete="off" placeholder="Escribe nombre o clave del ejercicio..." />
+                    <div class="autocomplete-list" id="listaMaterias"></div>
+                    <div class="invalid-feedback">Debe seleccionar un ejercicio de la lista.</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Clave Ejercicio</label>
+                        <input class="form-control" id="ClaveVisible" value="@Model.Clave_del_ejercicio_investigativo" readonly />
+                        <input asp-for="Clave_del_ejercicio_investigativo" type="hidden" id="Clave_del_ejercicio_investigativo" />
+                    </div>
+                    <div class="col-md-9">
+                        <label class="form-label">Nombre del Ejercicio</label>
+                        <input asp-for="Nombre_del_ejercicio_investigativo" class="form-control" id="Nombre_del_ejercicio_investigativo" readonly />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <label class="form-label">Programa Educativo</label>
+                        <input asp-for="Programa_educativo" class="form-control" id="Programa_educativo" readonly />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">No. Prog. Educativo</label>
+                        <input class="form-control" id="No_de_programa_educativo_vis" value="@Model.No_de_programa_educativo" readonly />
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label">Plan de Estudios</label>
+                        <input asp-for="Plan_de_estudio" class="form-control" id="Plan_de_estudio" readonly />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Créditos</label>
+                        <input asp-for="Creditos_del_ejercicio_investigativo" class="form-control" id="Creditos_del_ejercicio_investigativo" readonly />
+                    </div>
+                </div>
+
+                <h5 class="seccion-titulo mt-5">Asignación y Estatus</h5>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label">Grupo <span class="text-danger">*</span></label>
+                        <input asp-for="Grupo" class="form-control" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Capturado <span class="text-danger">*</span></label>
+                        <select asp-for="Capturado" class="form-select" required>
+                            <option value="">Seleccione...</option>
+                            <option value="SI">SI</option>
+                            <option value="NO">NO</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h5 class="seccion-titulo mt-5">Datos del Profesor / Tutor</h5>
+                <div class="form-group autocomplete-wrapper mb-3">
+                    <label class="form-label">Buscar Maestro <span class="text-danger">*</span></label>
+                    <input id="buscarMaestro" class="form-control form-control-lg" value="@Model.No_de_empleado - @Model.Nombre_del_profesor_tutor_o_investigador" autocomplete="off" placeholder="Escribe número o nombre del profesor..." />
+                    <div class="autocomplete-list" id="listaMaestros"></div>
+                    <div class="invalid-feedback">Debe seleccionar un maestro de la lista.</div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <label class="form-label">No. Empleado</label>
+                        <input class="form-control" id="NoEmpleadoVisible" value="@Model.No_de_empleado" readonly />
+                        <input asp-for="No_de_empleado" type="hidden" id="No_de_empleado" />
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label">Nombre del Profesor, Tutor o Investigador</label>
+                        <input asp-for="Nombre_del_profesor_tutor_o_investigador" class="form-control" id="Nombre_del_profesor_tutor_o_investigador" readonly />
+                    </div>
+                </div>
+
+                <hr class="mt-5 mb-4" />
+                <div class="text-end">
+                    <a asp-action="Index" class="btn btn-secondary btn-lg me-2">Cancelar</a>
+                    <button type="submit" class="btn btn-uabc btn-lg">Guardar Cambios</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        // 1. Cargar las listas pasadas desde el Controlador (ViewBag)
+        var alumnos = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Alumnos ?? new List<object>()));
+        var maestros = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Maestros ?? new List<object>()));
+        var materias = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Materias ?? new List<object>()));
+
+        // 2. Como estamos editando, los datos iniciales ya existen y son válidos
+        var alumnoSeleccionado = true;
+        var materiaSeleccionada = true;
+        var maestroSeleccionado = true;
+
+        // 3. Lógica del Autocomplete
+        function autocomplete(inputId, listId, data, searchFields, onSelect, flagName) {
+            const input = document.getElementById(inputId);
+            const list = document.getElementById(listId);
+
+            input.addEventListener('input', function () {
+                const q = this.value.toLowerCase();
+                list.innerHTML = '';
+
+                if (!q) {
+                    list.style.display = 'none';
+                    window[flagName] = false;
+                    return;
+                }
+
+                const filtered = data.filter(d => searchFields.some(f => String(d[f]).toLowerCase().includes(q)));
+
+                if (filtered.length === 0) {
+                    list.style.display = 'none';
+                    window[flagName] = false;
+                    return;
+                }
+
+                filtered.forEach(item => {
+                    const div = document.createElement('div');
+                    div.textContent = searchFields.map(f => item[f]).join(' - ');
+
+                    div.addEventListener('click', () => {
+                        input.value = div.textContent;
+                        list.style.display = 'none';
+                        window[flagName] = true;
+                        input.classList.add('is-valid');
+                        input.classList.remove('is-invalid');
+                        onSelect(item);
+                    });
+
+                    list.appendChild(div);
+                });
+
+                list.style.display = 'block';
+            });
+
+            input.addEventListener('blur', function () {
+                if (!window[flagName] && this.value.trim() !== '') {
+                    this.classList.add('is-invalid');
+                    this.classList.remove('is-valid');
+                }
+            });
+
+            document.addEventListener('click', e => {
+                if (!input.contains(e.target)) list.style.display = 'none';
+            });
+        }
+
+        // 4. Asignamos los autocompletes a los campos de la pantalla
+        autocomplete('buscarAlumno', 'listaAlumnos', alumnos, ['Matricula', 'Nombre'], item => {
+            document.getElementById('Matricula').value = item.Matricula;
+            document.getElementById('MatriculaVisible').value = item.Matricula;
+            document.getElementById('Nombre_del_alumno').value = item.Nombre;
+        }, 'alumnoSeleccionado');
+
+        autocomplete('buscarMateria', 'listaMaterias', materias, ['NombreUA', 'NombrePE'], item => {
+            document.getElementById('Clave_del_ejercicio_investigativo').value = item.ClaveUA;
+            document.getElementById('ClaveVisible').value = item.ClaveUA;
+            document.getElementById('Nombre_del_ejercicio_investigativo').value = item.NombreUA;
+            document.getElementById('Programa_educativo').value = item.NombrePE;
+            document.getElementById('No_de_programa_educativo_vis').value = item.NoPE;
+            document.getElementById('Plan_de_estudio').value = item.PlanDeEstudios;
+            document.getElementById('Creditos_del_ejercicio_investigativo').value = item.Creditos;
+        }, 'materiaSeleccionada');
+
+        autocomplete('buscarMaestro', 'listaMaestros', maestros, ['Numero_Empleado', 'Nombre'], item => {
+            document.getElementById('No_de_empleado').value = item.Numero_Empleado;
+            document.getElementById('NoEmpleadoVisible').value = item.Numero_Empleado;
+            document.getElementById('Nombre_del_profesor_tutor_o_investigador').value = item.Nombre;
+        }, 'maestroSeleccionado');
+
+        // 5. Verificamos que todo esté bien antes de enviar el Post al controlador
+        document.getElementById('formEjercicio').addEventListener('submit', function (e) {
+            var isValid = true;
+            var errores = [];
+
+            if (!alumnoSeleccionado || !document.getElementById('Matricula').value) {
+                document.getElementById('buscarAlumno').classList.add('is-invalid');
+                errores.push('Debe seleccionar un alumno válido de la lista.');
+                isValid = false;
+            }
+            if (!materiaSeleccionada || !document.getElementById('Clave_del_ejercicio_investigativo').value) {
+                document.getElementById('buscarMateria').classList.add('is-invalid');
+                errores.push('Debe seleccionar un ejercicio válido de la lista.');
+                isValid = false;
+            }
+            if (!maestroSeleccionado || !document.getElementById('No_de_empleado').value) {
+                document.getElementById('buscarMaestro').classList.add('is-invalid');
+                errores.push('Debe seleccionar un maestro válido de la lista.');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault(); // Detiene el envío del formulario
+                e.stopPropagation();
+
+                var alerta = document.getElementById('alertaValidacion');
+                var listaErrores = document.getElementById('listaErrores');
+                listaErrores.innerHTML = '';
+
+                errores.forEach(err => {
+                    var li = document.createElement('li');
+                    li.textContent = err;
+                    listaErrores.appendChild(li);
+                });
+
+                alerta.classList.add('show');
+                alerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            this.classList.add('was-validated');
+        });
+    </script>
+}

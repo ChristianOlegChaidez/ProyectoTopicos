@@ -1,0 +1,97 @@
+﻿@model ProyectoTopicos.Models.Ejercicios_investigativos
+@{
+    ViewData["Title"] = "Eliminar Ejercicio Investigativo";
+}
+
+<style>
+    nav {
+        display: none;
+    }
+
+    .uabc-header {
+        background-color: #1b5e3f;
+        color: white;
+        padding: 20px 30px;
+        margin-bottom: 30px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .logo-uabc-header {
+        height: 80px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .uabc-header h1 {
+        font-size: 2rem;
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .card-confirm {
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        padding: 30px;
+        background-color: #fafafa;
+    }
+
+    .dato-label {
+        color: #1b5e3f;
+        font-weight: bold;
+        text-align: right;
+    }
+
+    .dato-valor {
+        font-weight: 500;
+        color: #444;
+    }
+</style>
+
+<div class="uabc-header">
+    <img src="~/images/logo-uabc.png" alt="Logo UABC" class="logo-uabc-header">
+    <h1>Confirmar Eliminación</h1>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card-confirm shadow-sm">
+            <h5 class="text-danger mb-3"><strong>¿Estás completamente seguro que deseas eliminar este registro?</strong></h5>
+            <p class="text-muted">Esta acción no se puede deshacer.</p>
+            <hr class="mb-4" />
+
+            <dl class="row">
+                <dt class="col-sm-5 dato-label">No. Prog. Educativo</dt>
+                <dd class="col-sm-7 dato-valor">@Model.No_de_programa_educativo</dd>
+
+                <dt class="col-sm-5 dato-label">Programa Educativo</dt>
+                <dd class="col-sm-7 dato-valor">@Model.Programa_educativo</dd>
+
+                <dt class="col-sm-5 dato-label">Matrícula</dt>
+                <dd class="col-sm-7 dato-valor"><span class="badge bg-warning text-dark fs-6">@Model.Matricula</span></dd>
+
+                <dt class="col-sm-5 dato-label">Nombre Alumno</dt>
+                <dd class="col-sm-7 dato-valor">@Model.Nombre_del_alumno</dd>
+
+                <dt class="col-sm-5 dato-label">Nombre del Ejercicio</dt>
+                <dd class="col-sm-7 dato-valor">@Model.Nombre_del_ejercicio_investigativo</dd>
+
+                <dt class="col-sm-5 dato-label">Profesor / Tutor</dt>
+                <dd class="col-sm-7 dato-valor">@Model.Nombre_del_profesor_tutor_o_investigador</dd>
+
+                <dt class="col-sm-5 dato-label">Grupo</dt>
+                <dd class="col-sm-7 dato-valor">@Model.Grupo</dd>
+            </dl>
+
+            <hr class="mt-4 mb-4" />
+
+            <form asp-action="Delete" class="text-end">
+                <input type="hidden" asp-for="No_de_programa_educativo" />
+                <a asp-action="Index" class="btn btn-secondary btn-lg me-2">Cancelar</a>
+                <button type="submit" class="btn btn-danger btn-lg">Sí, Confirmar Eliminar</button>
+            </form>
+        </div>
+    </div>
+</div>
